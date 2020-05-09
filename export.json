@@ -1301,7 +1301,7 @@
                 "stackbit_model_type": "page",
                 "title": "Blog",
                 "template": "blog",
-                "stackbit_url_path": "/blog"
+                "stackbit_url_path": "/blog/"
             }
         },
         {
