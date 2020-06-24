@@ -65,7 +65,12 @@ webpackJsonp([0],[,function(e,t,n){e.exports=n(657)()},function(e,t,n){var r=n(1
             }
         }
     ],
-    "singleInstance": true
+    "singleInstance": true,
+    "preview": {
+        "select": {
+            "title": "title"
+        }
+    }
 },{
     "type": "object",
     "name": "header",
@@ -104,6 +109,19 @@ webpackJsonp([0],[,function(e,t,n){e.exports=n(657)()},function(e,t,n){var r=n(1
                     "type": "action"
                 }
             ]
+        },
+        {
+            "type": "string",
+            "name": "type",
+            "title": "Object Type",
+            "description": "The type of the object",
+            "hidden": false,
+            "validation": Rule => Rule.required(),
+            "options": {
+                "list": [
+                    "header"
+                ]
+            }
         },
         {
             "type": "string",
@@ -240,6 +258,19 @@ webpackJsonp([0],[,function(e,t,n){e.exports=n(657)()},function(e,t,n){var r=n(1
         },
         {
             "type": "string",
+            "name": "type",
+            "title": "Object Type",
+            "description": "The type of the object",
+            "hidden": false,
+            "validation": Rule => Rule.required(),
+            "options": {
+                "list": [
+                    "footer"
+                ]
+            }
+        },
+        {
+            "type": "string",
             "name": "stackbit_model_type",
             "title": "Stackbit Model Type",
             "description": "Stackbit model type",
@@ -255,6 +286,67 @@ webpackJsonp([0],[,function(e,t,n){e.exports=n(657)()},function(e,t,n){var r=n(1
     "preview": {
         "select": {
             "title": "tagline"
+        }
+    }
+},{
+    "type": "document",
+    "name": "person",
+    "title": "Person",
+    "fields": [
+        {
+            "type": "string",
+            "name": "first_name",
+            "title": "First Name",
+            "validation": null
+        },
+        {
+            "type": "string",
+            "name": "last_name",
+            "title": "Last Name",
+            "validation": null
+        },
+        {
+            "type": "markdown",
+            "name": "bio",
+            "title": "Bio",
+            "validation": null
+        },
+        {
+            "type": "image",
+            "name": "photo",
+            "title": "Photo",
+            "validation": null
+        },
+        {
+            "type": "string",
+            "name": "type",
+            "title": "Object Type",
+            "description": "The type of the object",
+            "hidden": false,
+            "validation": Rule => Rule.required(),
+            "options": {
+                "list": [
+                    "person"
+                ]
+            }
+        },
+        {
+            "type": "string",
+            "name": "stackbit_model_type",
+            "title": "Stackbit Model Type",
+            "description": "Stackbit model type",
+            "hidden": false,
+            "validation": Rule => Rule.required(),
+            "options": {
+                "list": [
+                    "data"
+                ]
+            }
+        }
+    ],
+    "preview": {
+        "select": {
+            "title": "first_name"
         }
     }
 },{
@@ -491,6 +583,18 @@ webpackJsonp([0],[,function(e,t,n){e.exports=n(657)()},function(e,t,n){var r=n(1
             "validation": Rule => Rule.required()
         },
         {
+            "type": "reference",
+            "name": "author",
+            "title": "Author",
+            "description": "Post author",
+            "validation": null,
+            "to": [
+                {
+                    "type": "person"
+                }
+            ]
+        },
+        {
             "type": "markdown",
             "name": "excerpt",
             "title": "Excerpt",
@@ -617,8 +721,8 @@ webpackJsonp([0],[,function(e,t,n){e.exports=n(657)()},function(e,t,n){var r=n(1
         {
             "type": "string",
             "name": "type",
-            "title": "Reference Type Name",
-            "description": "Name of the Stackbit object model, used by fields of type reference",
+            "title": "Object Type",
+            "description": "The type of the object",
             "hidden": false,
             "validation": Rule => Rule.required(),
             "options": {
@@ -686,8 +790,8 @@ webpackJsonp([0],[,function(e,t,n){e.exports=n(657)()},function(e,t,n){var r=n(1
         {
             "type": "string",
             "name": "type",
-            "title": "Reference Type Name",
-            "description": "Name of the Stackbit object model, used by fields of type reference",
+            "title": "Object Type",
+            "description": "The type of the object",
             "hidden": false,
             "validation": Rule => Rule.required(),
             "options": {
@@ -769,8 +873,8 @@ webpackJsonp([0],[,function(e,t,n){e.exports=n(657)()},function(e,t,n){var r=n(1
         {
             "type": "string",
             "name": "type",
-            "title": "Reference Type Name",
-            "description": "Name of the Stackbit object model, used by fields of type reference",
+            "title": "Object Type",
+            "description": "The type of the object",
             "hidden": false,
             "validation": Rule => Rule.required(),
             "options": {
@@ -817,6 +921,19 @@ webpackJsonp([0],[,function(e,t,n){e.exports=n(657)()},function(e,t,n){var r=n(1
         },
         {
             "type": "string",
+            "name": "type",
+            "title": "Object Type",
+            "description": "The type of the object",
+            "hidden": false,
+            "validation": Rule => Rule.required(),
+            "options": {
+                "list": [
+                    "faq_item"
+                ]
+            }
+        },
+        {
+            "type": "string",
             "name": "stackbit_model_type",
             "title": "Stackbit Model Type",
             "description": "Stackbit model type",
@@ -828,7 +945,12 @@ webpackJsonp([0],[,function(e,t,n){e.exports=n(657)()},function(e,t,n){var r=n(1
                 ]
             }
         }
-    ]
+    ],
+    "preview": {
+        "select": {
+            "title": "type"
+        }
+    }
 },{
     "type": "object",
     "name": "section_features",
@@ -883,8 +1005,8 @@ webpackJsonp([0],[,function(e,t,n){e.exports=n(657)()},function(e,t,n){var r=n(1
         {
             "type": "string",
             "name": "type",
-            "title": "Reference Type Name",
-            "description": "Name of the Stackbit object model, used by fields of type reference",
+            "title": "Object Type",
+            "description": "The type of the object",
             "hidden": false,
             "validation": Rule => Rule.required(),
             "options": {
@@ -947,6 +1069,19 @@ webpackJsonp([0],[,function(e,t,n){e.exports=n(657)()},function(e,t,n){var r=n(1
                     "type": "action"
                 }
             ]
+        },
+        {
+            "type": "string",
+            "name": "type",
+            "title": "Object Type",
+            "description": "The type of the object",
+            "hidden": false,
+            "validation": Rule => Rule.required(),
+            "options": {
+                "list": [
+                    "feature_item"
+                ]
+            }
         },
         {
             "type": "string",
@@ -1014,8 +1149,8 @@ webpackJsonp([0],[,function(e,t,n){e.exports=n(657)()},function(e,t,n){var r=n(1
         {
             "type": "string",
             "name": "type",
-            "title": "Reference Type Name",
-            "description": "Name of the Stackbit object model, used by fields of type reference",
+            "title": "Object Type",
+            "description": "The type of the object",
             "hidden": false,
             "validation": Rule => Rule.required(),
             "options": {
@@ -1086,8 +1221,8 @@ webpackJsonp([0],[,function(e,t,n){e.exports=n(657)()},function(e,t,n){var r=n(1
         {
             "type": "string",
             "name": "type",
-            "title": "Reference Type Name",
-            "description": "Name of the Stackbit object model, used by fields of type reference",
+            "title": "Object Type",
+            "description": "The type of the object",
             "hidden": false,
             "validation": Rule => Rule.required(),
             "options": {
@@ -1169,8 +1304,8 @@ webpackJsonp([0],[,function(e,t,n){e.exports=n(657)()},function(e,t,n){var r=n(1
         {
             "type": "string",
             "name": "type",
-            "title": "Reference Type Name",
-            "description": "Name of the Stackbit object model, used by fields of type reference",
+            "title": "Object Type",
+            "description": "The type of the object",
             "hidden": false,
             "validation": Rule => Rule.required(),
             "options": {
@@ -1238,6 +1373,19 @@ webpackJsonp([0],[,function(e,t,n){e.exports=n(657)()},function(e,t,n){var r=n(1
                     "type": "action"
                 }
             ]
+        },
+        {
+            "type": "string",
+            "name": "type",
+            "title": "Object Type",
+            "description": "The type of the object",
+            "hidden": false,
+            "validation": Rule => Rule.required(),
+            "options": {
+                "list": [
+                    "pricing_plan"
+                ]
+            }
         },
         {
             "type": "string",
@@ -1312,8 +1460,8 @@ webpackJsonp([0],[,function(e,t,n){e.exports=n(657)()},function(e,t,n){var r=n(1
         {
             "type": "string",
             "name": "type",
-            "title": "Reference Type Name",
-            "description": "Name of the Stackbit object model, used by fields of type reference",
+            "title": "Object Type",
+            "description": "The type of the object",
             "hidden": false,
             "validation": Rule => Rule.required(),
             "options": {
@@ -1363,6 +1511,19 @@ webpackJsonp([0],[,function(e,t,n){e.exports=n(657)()},function(e,t,n){var r=n(1
             "name": "content",
             "title": "Content",
             "validation": null
+        },
+        {
+            "type": "string",
+            "name": "type",
+            "title": "Object Type",
+            "description": "The type of the object",
+            "hidden": false,
+            "validation": Rule => Rule.required(),
+            "options": {
+                "list": [
+                    "review_item"
+                ]
+            }
         },
         {
             "type": "string",
@@ -1433,8 +1594,8 @@ webpackJsonp([0],[,function(e,t,n){e.exports=n(657)()},function(e,t,n){var r=n(1
         {
             "type": "string",
             "name": "type",
-            "title": "Reference Type Name",
-            "description": "Name of the Stackbit object model, used by fields of type reference",
+            "title": "Object Type",
+            "description": "The type of the object",
             "hidden": false,
             "validation": Rule => Rule.required(),
             "options": {
@@ -1493,6 +1654,19 @@ webpackJsonp([0],[,function(e,t,n){e.exports=n(657)()},function(e,t,n){var r=n(1
             "description": "Should the link open a new tab",
             "initialValue": true,
             "validation": null
+        },
+        {
+            "type": "string",
+            "name": "type",
+            "title": "Object Type",
+            "description": "The type of the object",
+            "hidden": false,
+            "validation": Rule => Rule.required(),
+            "options": {
+                "list": [
+                    "action"
+                ]
+            }
         },
         {
             "type": "string",

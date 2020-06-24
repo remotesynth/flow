@@ -1,38 +1,31 @@
 export default {
-    "type": "object",
-    "name": "feature_item",
-    "title": "Feature Item",
+    "type": "document",
+    "name": "person",
+    "title": "Person",
     "fields": [
         {
             "type": "string",
-            "name": "title",
-            "title": "Title",
+            "name": "first_name",
+            "title": "First Name",
+            "validation": null
+        },
+        {
+            "type": "string",
+            "name": "last_name",
+            "title": "Last Name",
             "validation": null
         },
         {
             "type": "markdown",
-            "name": "content",
-            "title": "Content",
-            "description": "Feature description",
+            "name": "bio",
+            "title": "Bio",
             "validation": null
         },
         {
             "type": "image",
-            "name": "image",
-            "title": "Image",
-            "description": "Feature image",
+            "name": "photo",
+            "title": "Photo",
             "validation": null
-        },
-        {
-            "type": "array",
-            "name": "actions",
-            "title": "Action Buttons",
-            "validation": null,
-            "of": [
-                {
-                    "type": "action"
-                }
-            ]
         },
         {
             "type": "string",
@@ -43,7 +36,7 @@ export default {
             "validation": Rule => Rule.required(),
             "options": {
                 "list": [
-                    "feature_item"
+                    "person"
                 ]
             }
         },
@@ -56,14 +49,14 @@ export default {
             "validation": Rule => Rule.required(),
             "options": {
                 "list": [
-                    "object"
+                    "data"
                 ]
             }
         }
     ],
     "preview": {
         "select": {
-            "title": "title"
+            "title": "first_name"
         }
     }
 }

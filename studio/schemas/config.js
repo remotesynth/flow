@@ -65,5 +65,10 @@ export default {
             }
         }
     ],
-    "singleInstance": true
+    "singleInstance": true,
+    "preview": {
+        "select": {
+            "title": "title"
+        }
+    }
 }

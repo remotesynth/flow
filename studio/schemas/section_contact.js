@@ -48,8 +48,8 @@ export default {
         {
             "type": "string",
             "name": "type",
-            "title": "Reference Type Name",
-            "description": "Name of the Stackbit object model, used by fields of type reference",
+            "title": "Object Type",
+            "description": "The type of the object",
             "hidden": false,
             "validation": Rule => Rule.required(),
             "options": {

@@ -8,6 +8,7 @@ import schemaTypes from 'all:part:@sanity/base/schema-type'
 import config from './config.js';
 import header from './header.js';
 import footer from './footer.js';
+import person from './person.js';
 import landing from './landing.js';
 import blog from './blog.js';
 import page from './page.js';
@@ -38,6 +39,7 @@ export default createSchema({
     config,
     header,
     footer,
+    person,
     landing,
     blog,
     page,

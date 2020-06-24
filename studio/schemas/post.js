@@ -24,6 +24,18 @@ export default {
             "validation": Rule => Rule.required()
         },
         {
+            "type": "reference",
+            "name": "author",
+            "title": "Author",
+            "description": "Post author",
+            "validation": null,
+            "to": [
+                {
+                    "type": "person"
+                }
+            ]
+        },
+        {
             "type": "markdown",
             "name": "excerpt",
             "title": "Excerpt",
