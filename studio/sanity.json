@@ -1,10 +1,10 @@
 {
   "root": true,
   "project": {
-    "name": "__stackbit_sanity_project_name__"
+    "name": "flow-sanity-stackbit-b83b8"
   },
   "api": {
-    "projectId": "__stackbit_sanity_project_id__",
+    "projectId": "w8forl0u",
     "dataset": "production"
   },
   "plugins": [
