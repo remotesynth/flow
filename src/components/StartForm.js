@@ -11,7 +11,7 @@ export default class StartForm extends React.Component {
               <div className="form-row">
                 <label>
                   <span className="screen-reader-text">Email Comercial</span>
-                  <input className="lead-email" type="email" name="email" placeholder="Seu email comercial"/>
+                  <input className="lead-email" type="email" required name="email" placeholder="Seu email comercial"/>
                 </label>
               </div>
               <input type="hidden" name="form-name" value="startForm" />

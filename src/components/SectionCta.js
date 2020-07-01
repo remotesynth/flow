@@ -3,6 +3,7 @@ import _ from 'lodash';
 
 import {htmlToReact} from '../utils';
 import ActionLink from './ActionLink';
+import StartForm from './StartForm';
 
 export default class SectionCta extends React.Component {
     render() {
@@ -22,11 +23,7 @@ export default class SectionCta extends React.Component {
                     )}
                   </div>
                   {_.get(section, 'actions', null) && (
-                  <div className="cell block-buttons">
-                    {_.map(_.get(section, 'actions', null), (action, action_idx) => (
-                      <ActionLink key={action_idx} {...this.props} action={action} class_names={'button white large'} />
-                    ))}
-                  </div>
+                    <StartForm {...this.props} />
                   )}
                 </div>
               </div>
