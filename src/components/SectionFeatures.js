@@ -26,7 +26,7 @@ export default class SectionFeatures extends React.Component {
                   <div className="grid">
                     {_.get(feature, 'image', null) && (
                     <div className="cell block-preview">
-                      <img src={safePrefix(_.get(feature, 'image', null))} alt={_.get(feature, 'title', null)} />
+                      <img className="imgFeature" src={safePrefix(_.get(feature, 'image', null))} alt={_.get(feature, 'title', null)} />
                     </div>
                     )}
                     <div className="cell block-content">
