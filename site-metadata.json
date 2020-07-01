@@ -1,0 +1,29 @@
+{
+    "header": {
+        "title": "Flow ",
+        "tagline": "Alugue o que quiser para seu negócio"
+    },
+    "footer": {
+        "content": "&copy; Flow. Todos os Direitos reservados.",
+        "links": [
+            {
+                "text": "Made with ❤️ and ☕️ in Cali and Sampa",
+                "url": "https://flowbr.com",
+                "new_window": true
+            }
+        ]
+    },
+    "title": "Flow",
+    "author": "André Antonelli",
+    "siteUrl": "https://flowbr.com/",
+    "description": "A plataforma flow é especialista em converter altos investimentos em mensalidades adequadas ao orçamento do seu negócio.",
+    "keywords": [
+        "Cashflow",
+        "Emprestimo",
+        "Parcelas",
+        "rápido",
+        "Crescimento",
+        "Financiamento",
+        "Leasing"
+    ]
+}

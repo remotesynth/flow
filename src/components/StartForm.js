@@ -3,7 +3,8 @@ import React from 'react';
 export default class StartForm extends React.Component {
     render() {
         return (
-            <form name="startForm" method="POST" netlifyHoneypot="bot-field" data-netlify="true" id="start-form" className="start-form">
+            <form name="startForm" method="POST" data-netlify-honeypot="bot-field" data-netlify="true" id="start-form" className="start-form">
+              <input type="hidden" name="form-name" value="startForm" />
               <div className="screen-reader-text">
                 <label>Don't fill this out if you're human: <input name="bot-field" /></label>
               </div>
