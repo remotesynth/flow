@@ -3,6 +3,7 @@ import _ from 'lodash';
 
 import {safePrefix, markdownify} from '../utils';
 import ActionLink from './ActionLink';
+import StartForm from './StartForm';
 
 export default class SectionHero extends React.Component {
     render() {
@@ -23,16 +24,7 @@ export default class SectionHero extends React.Component {
                     <div className="block-copy">
                       {markdownify(_.get(section, 'content', null))}
                     </div>
-                    <form>
-                        <input type="email" name="email-input" id="email-input" placeholder="exemplo@suaempresa.com.br" required />
-                        {_.get(section, 'actions', null) && (
-                          <p className="block-buttons">
-                            {_.map(_.get(section, 'actions', null), (action, action_idx) => (
-                              <ActionLink key={action_idx} {...this.props} action={action} class_names={'button white large'} />
-                            ))}
-                          </p>
-                          )}
-                    </form>
+                    <StartForm {...this.props} />
                   </div>
                 </div>
               </div>
