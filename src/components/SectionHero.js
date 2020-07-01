@@ -23,13 +23,16 @@ export default class SectionHero extends React.Component {
                     <div className="block-copy">
                       {markdownify(_.get(section, 'content', null))}
                     </div>
-                    {_.get(section, 'actions', null) && (
-                    <p className="block-buttons">
-                      {_.map(_.get(section, 'actions', null), (action, action_idx) => (
-                        <ActionLink key={action_idx} {...this.props} action={action} class_names={'button white large'} />
-                      ))}
-                    </p>
-                    )}
+                    <form>
+                        <input type="email" name="email-input" id="email-input" placeholder="exemplo@suaempresa.com.br" required />
+                        {_.get(section, 'actions', null) && (
+                          <p className="block-buttons">
+                            {_.map(_.get(section, 'actions', null), (action, action_idx) => (
+                              <ActionLink key={action_idx} {...this.props} action={action} class_names={'button white large'} />
+                            ))}
+                          </p>
+                          )}
+                    </form>
                   </div>
                 </div>
               </div>
