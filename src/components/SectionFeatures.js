@@ -30,7 +30,7 @@ export default class SectionFeatures extends React.Component {
                     </div>
                     )}
                     <div className="cell block-content">
-                      <h3 className="block-title underline">{_.get(feature, 'title', null)}</h3>
+                      <h4 className="block-title underline">{_.get(feature, 'title', null)}</h4>
                       <div className="block-copy">
                         {markdownify(_.get(feature, 'content', null))}
                       </div>
