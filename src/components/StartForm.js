@@ -17,10 +17,9 @@ const handleSubmit = (e) => {
       ...state,
     }),
   })
-    .then(() => navigate(form.getAttribute('action')))
+    .then(() => navigate(form.getAttribute('action', ...state)))
     .catch((error) => alert(error))
 }
-
 
 export default class StartForm extends React.Component {
     render() {
