@@ -1,0 +1,35 @@
+
+//////////////////////////////////////////////////////////////
+// CALL CNPJ API
+//////////////////////////////////////////////////////////////
+
+
+fetch("https://consulta-cnpj-gratis.p.rapidapi.com/companies/{{CNPJ-INPUT-VALUE}}", {
+	"method": "GET",
+	"headers": {
+		"x-rapidapi-host": "consulta-cnpj-gratis.p.rapidapi.com",
+		"x-rapidapi-key": "d19a7752b8mshe8fe2084d6f1f45p13408ajsn4945cb360eba"
+	}
+})
+.then(response => {
+	console.log(response);
+})
+.catch(err => {
+	console.log(err);
+});
+
+
+//////////////////////////////////////////////////////////////
+// StartForm.js  SUBMIT POST URL
+//////////////////////////////////////////////////////////////
+
+var hook1 = 'https://hooks.zapier.com/hooks/catch/142211/ozo0et4/'; 
+
+
+//////////////////////////////////////////////////////////////
+// Onboarding Form SUBMIT POST URL
+//////////////////////////////////////////////////////////////
+
+var hook2 = 'https://hooks.zapier.com/hooks/catch/142211/ozon6ju/'; 
+
+
