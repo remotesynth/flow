@@ -6,7 +6,9 @@ The theme used is Stackbit Azimuth Theme and the original README is located [her
 
 The content of this site is managed by Sanity.io. Visit https://flow-sanity-stackbit-b83b8.sanity.studio/ to manage site content
 
-# Running Your Site Locally
+The MVP url is https://flowbr.com/
+
+# Running the Site Locally
 
 1. Install [Node.js and npm](https://nodejs.org/en/)
 
