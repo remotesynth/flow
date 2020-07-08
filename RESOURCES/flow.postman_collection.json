@@ -39,6 +39,11 @@
 							"type": "text"
 						},
 						{
+							"key": "projectDesciption",
+							"value": "Compra de equipamentos de TI e revitalização de loja",
+							"type": "text"
+						},
+						{
 							"key": "cnpj",
 							"value": "37621396000102",
 							"type": "text"
@@ -72,12 +77,6 @@
 							"key": "companyLegalNature",
 							"value": "{\n\"code\":\"2062\",\n\"description\":\"Sociedade Empresária Limitada\"\n}",
 							"type": "text"
-						},
-						{
-							"key": "",
-							"value": "",
-							"type": "text",
-							"disabled": true
 						}
 					]
 				},
