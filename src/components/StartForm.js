@@ -14,10 +14,9 @@ const handleSubmit = (e) => {
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body: encode({
       'form-name': form.getAttribute('name'),
-      ...state,
     }),
   })
-    .then(() => navigate(form.getAttribute('action', ...state)))
+    .then(() => navigate(form.getAttribute('action')))
     .catch((error) => alert(error))
 }
 

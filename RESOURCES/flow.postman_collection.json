@@ -35,12 +35,12 @@
 						},
 						{
 							"key": "projectValue",
-							"value": "100000",
+							"value": "2000000",
 							"type": "text"
 						},
 						{
 							"key": "projectDesciption",
-							"value": "Compra de equipamentos de TI e revitalização de loja",
+							"value": "Revitalização de 200 lojas",
 							"type": "text"
 						},
 						{
@@ -109,13 +109,13 @@
 					"formdata": [
 						{
 							"key": "email",
-							"value": "antonelli182@gmail.com",
+							"value": "andre@gmail.com",
 							"type": "text"
 						}
 					]
 				},
 				"url": {
-					"raw": "https://hooks.zapier.com/hooks/catch/142211/ozo0et4/?email=antonelli182@gmail.com",
+					"raw": "https://hooks.zapier.com/hooks/catch/142211/ozo0et4/",
 					"protocol": "https",
 					"host": [
 						"hooks",
@@ -128,12 +128,6 @@
 						"142211",
 						"ozo0et4",
 						""
-					],
-					"query": [
-						{
-							"key": "email",
-							"value": "antonelli182@gmail.com"
-						}
 					]
 				}
 			},
