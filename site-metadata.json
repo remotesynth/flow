@@ -1,19 +1,84 @@
 {
     "header": {
-        "title": "Flow ",
-        "tagline": "Alugue o que quiser para seu negócio"
+        "has_nav": true,
+        "logo_img": "https://cdn.sanity.io/images/w8forl0u/production/c2eca26fdd999f834cdd9d0bdc3df2cca917e59d-1905x556.svg",
+        "nav_links": [
+            {
+                "label": "Home",
+                "type": "action",
+                "url": "/"
+            },
+            {
+                "label": "Como Funciona",
+                "type": "action",
+                "url": "/como-funciona"
+            },
+            {
+                "label": "Sobre a flow",
+                "type": "action",
+                "url": "/sobre"
+            },
+            {
+                "label": "Blog",
+                "type": "action",
+                "url": "blog"
+            }
+        ],
+        "title": "flow",
+        "type": "header"
     },
     "footer": {
-        "content": "&copy; Flow. Todos os Direitos reservados.",
-        "links": [
+        "content": "&copy; Flow Brasil. Todos os direitos reservados.",
+        "has_nav": true,
+        "has_social": true,
+        "has_subscribe": false,
+        "links": [],
+        "logo_img": "https://cdn.sanity.io/images/w8forl0u/production/5b058aaebd80f927fdc12b3975be3a6c2f935754-663x556.svg",
+        "nav_links": [
             {
-                "text": "Made with ❤️ and ☕️ in Cali and Sampa",
-                "url": "https://flowbr.com",
-                "new_window": true
+                "label": "Como Funciona",
+                "type": "action",
+                "url": "/como-funciona"
+            },
+            {
+                "label": "Sobre a flow",
+                "type": "action",
+                "url": "/sobre"
+            },
+            {
+                "label": "Blog",
+                "type": "action",
+                "url": "/blog"
             }
-        ]
+        ],
+        "nav_title": "Company",
+        "social_links": [
+            {
+                "label": "Twitter",
+                "new_window": true,
+                "type": "action",
+                "url": "https://twitter.com/"
+            },
+            {
+                "label": "Instagram",
+                "new_window": true,
+                "type": "action",
+                "url": "https://www.instagram.com/"
+            },
+            {
+                "label": "LinkedIn",
+                "new_window": true,
+                "type": "action",
+                "url": "https://www.linkedin.com/company/flow-intermedia%C3%A7%C3%A3o-de-neg%C3%B3cios/"
+            }
+        ],
+        "social_title": "Community",
+        "subscribe_content": "Stay up to date with our latest developments.",
+        "subscribe_title": "Subscribe",
+        "tagline": "",
+        "type": "footer"
     },
-    "title": "Flow",
+    "title": "flow",
     "author": "André Antonelli",
     "siteUrl": "https://flowbr.com/",
     "description": "A plataforma flow é especialista em converter altos investimentos em mensalidades adequadas ao orçamento do seu negócio.",
@@ -25,5 +90,6 @@
         "Crescimento",
         "Financiamento",
         "Leasing"
-    ]
+    ],
+    "palette": "green"
 }
