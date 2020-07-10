@@ -1,0 +1,10 @@
+appointmentscheduled = "Em análise" 
+qualifiedtobuy = "Crédito aprovado"
+contractsent = "Contrato enviado" 
+closedwon = "Contrato assinado" 
+closedlost = "Solicitação cancelada"
+
+
+presentationscheduled
+decisionmakerboughtin
+2459793 
