@@ -80,4 +80,5 @@ export default CnpjInput;
 const CompanyName = styled.span`
   font-size: 1rem;
   margin: 0 15px;
+  font-weight: 700;
 `;

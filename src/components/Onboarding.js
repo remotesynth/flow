@@ -4,29 +4,7 @@ import styled from 'styled-components';
 import OnboardingForm from './OnboardingComponents/OnboardingForm';
 import get from 'lodash/get';
 import { navigate } from 'gatsby';
-
-const Container = styled.div`
-  min-height: 90vh;
-  background: white;
-  display: flex;
-`;
-const StepperContainer = styled.div`
-  min-height: 100%;
-  background: linear-gradient(to right, #438945, #73bb75);
-  width: 30%;
-`;
-const FormContainer = styled.form`
-  min-height: 100%;
-  width: 70%;
-  padding: 2rem;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-const Title = styled.h2`
-  font-size: 1.8rem;
-`;
+import Stepper from './OnboardingComponents/Stepper';
 
 const Onboarding = (props) => {
   const [step, setStep] = useState(1);
@@ -37,9 +15,16 @@ const Onboarding = (props) => {
   }
   return (
     <Container>
-      <StepperContainer>{/* <Stepper step={step} /> */}</StepperContainer>
+      <StepperContainer>
+        <Title>{pageContext.frontmatter.title}</Title>
+        <Stepper
+          current={step}
+          setStep={setStep}
+          steps={pageContext.frontmatter.steps}
+        />
+      </StepperContainer>
       <FormContainer>
-        <Title>{pageContext.frontmatter.steps[step]}</Title>
+        <StepTitle>{pageContext.frontmatter.steps[step]}</StepTitle>
         <OnboardingForm
           step={step}
           setStep={setStep}
@@ -59,8 +44,43 @@ Onboarding.propTypes = {
   pageContext: PropTypes.shape({
     frontmatter: PropTypes.shape({
       steps: PropTypes.object,
+      title: PropTypes.string,
     }),
   }),
 };
 
 export default Onboarding;
+
+const Container = styled.div`
+  min-height: 90vh;
+  background: white;
+  display: flex;
+`;
+const StepperContainer = styled.div`
+  min-height: 100%;
+  background: linear-gradient(to right, #438945, #73bb75);
+  width: 30%;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 2rem;
+`;
+const FormContainer = styled.form`
+  min-height: 100%;
+  width: 70%;
+  padding: 2rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: -2px 0 5px #438945;
+`;
+const Title = styled.h2`
+  font-size: 1.8rem;
+  color: white;
+  margin: 0;
+`;
+const StepTitle = styled.h3`
+  font-size: 1.8rem;
+`;

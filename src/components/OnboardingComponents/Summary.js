@@ -71,7 +71,7 @@ const Summary = () => {
 export default Summary;
 
 const Card = styled.div`
-  margin: 54px 0;
+  margin: 48px 0;
   padding: 5px 25px;
   border: ${(props) =>
     props.isAccepted ? '1px solid #438945' : '1px solid #ccc'};
