@@ -43,6 +43,9 @@ export default {
                 },
                 {
                     "type": "section_contact"
+                },
+                {
+                    "type": "onboarding"
                 }
             ]
         },
