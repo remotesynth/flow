@@ -12,7 +12,6 @@ const STEPS = {
   3: 'Company ID',
   4: 'Review',
 };
-
 const Onboarding = (props) => {
   const [step, setStep] = useState(1);
   const { location } = props;
