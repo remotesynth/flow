@@ -70,7 +70,7 @@ const StepperContainer = styled.div`
   box-sizing: border-box;
   padding: 2rem;
 `;
-const FormContainer = styled.form`
+const FormContainer = styled.div`
   min-height: 100%;
   width: 70%;
   padding: 2rem;

@@ -52,7 +52,7 @@ const Summary = () => {
             </TermsLabel>
           </Block>
           <Block>
-            <ProjectValue>{values.projectValue}</ProjectValue>
+            <ProjectValue>R$ {values.projectValue}</ProjectValue>
           </Block>
         </Line>
       </Card>

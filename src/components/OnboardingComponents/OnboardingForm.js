@@ -78,7 +78,7 @@ const OnboardingForm = (props) => {
     formData.append('firstName', values.firstName);
     formData.append('lastName', values.lastName);
     formData.append('phone', values.phone);
-    formData.append('projectValue', values.projectValue);
+    formData.append('projectValue', stripCurrency(values.projectValue));
     formData.append('projectDescription', values.projectDescription);
     formData.append('cnpj', values.cnpj.replace(/\D/g, ''));
     formData.append('companyName', values.company.name);

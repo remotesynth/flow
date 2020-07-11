@@ -17,7 +17,7 @@ const defaultMaskOptions = {
   decimalLimit: 2,
   integerLimit: 9,
   allowNegative: false,
-  allowLeadingZeroes: false,
+  allowLeadingZeroes: true,
 };
 const name = 'projectValue';
 
@@ -35,12 +35,13 @@ const SliderThumbIcon = () => (
 );
 
 export const stripCurrency = (str) =>
-  str.replaceAll('.', '').replaceAll('R$', '').replaceAll(',', '.');
-export const formatCurrency = (num) =>
-  Intl.NumberFormat('pt-BR', {
-    style: 'currency',
-    currency: 'BRL',
-  }).format(num);
+  str.replace('R$', '').replaceAll('.', '').replaceAll(',', '.');
+/**
+ *
+ * @param {number} num
+ * @returns {string} formatted string without the currency sign, but with thousand and decimal separators
+ */
+export const formatCurrency = (num) => Intl.NumberFormat('pt-BR').format(num);
 
 const ProjectValueInput = ({ max }) => {
   const { values, errors, touched, setFieldValue, handleBlur } = useForm();
@@ -57,7 +58,14 @@ const ProjectValueInput = ({ max }) => {
         value={value}
         onChange={(e) => {
           const num = +stripCurrency(e.target.value ?? '0');
-          setFieldValue(name, num > max ? String(max) : e.target.value);
+          if (e.target.value) {
+            setFieldValue(
+              name,
+              num > max ? formatCurrency(max) : e.target.value.replace('R$', '')
+            );
+          } else {
+            setFieldValue(name, '0');
+          }
         }}
         onBlur={handleBlur}
         onFocus={(e) => e.target.select()}
@@ -93,7 +101,6 @@ ProjectValueInput.propTypes = {
 };
 
 export default ProjectValueInput;
-
 
 export const Container = styled.div`
   padding: 0 15px;
