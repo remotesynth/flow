@@ -41,7 +41,7 @@
                 "url": "/como-funciona"
             },
             {
-                "label": "Sobre a flow",
+                "label": "Quem somos",
                 "type": "action",
                 "url": "/sobre"
             },
@@ -51,7 +51,7 @@
                 "url": "/blog"
             }
         ],
-        "nav_title": "Company",
+        "nav_title": "Sobre a flow",
         "social_links": [
             {
                 "label": "Twitter",
@@ -72,7 +72,7 @@
                 "url": "https://www.linkedin.com/company/flow-intermedia%C3%A7%C3%A3o-de-neg%C3%B3cios/"
             }
         ],
-        "social_title": "Community",
+        "social_title": "Siga nas redes",
         "subscribe_content": "Stay up to date with our latest developments.",
         "subscribe_title": "Subscribe",
         "tagline": "",

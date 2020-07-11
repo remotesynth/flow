@@ -1,30 +1,35 @@
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import OnboardingForm from './OnboardingComponents/OnboardingForm';
 import get from 'lodash/get';
 import { navigate } from 'gatsby';
 import Stepper from './OnboardingComponents/Stepper';
 
+const STEPS = {
+  1: 'About You',
+  2: 'About the Project',
+  3: 'Company ID',
+  4: 'Review',
+};
+
 const Onboarding = (props) => {
   const [step, setStep] = useState(1);
-  const { pageContext, location } = props;
+  const { location } = props;
   const email = get(location, 'state.email', null);
-  if (!email) {
-    navigate('/');
-  }
+  useEffect(() => {
+    if (!email) {
+      navigate('/');
+    }
+  }, [email]);
   return (
     <Container>
       <StepperContainer>
-        <Title>{pageContext.frontmatter.title}</Title>
-        <Stepper
-          current={step}
-          setStep={setStep}
-          steps={pageContext.frontmatter.steps}
-        />
+        <Title>Sign Up</Title>
+        <Stepper current={step} setStep={setStep} steps={STEPS} />
       </StepperContainer>
       <FormContainer>
-        <StepTitle>{pageContext.frontmatter.steps[step]}</StepTitle>
+        <StepTitle>{STEPS[step]}</StepTitle>
         <OnboardingForm
           step={step}
           setStep={setStep}
