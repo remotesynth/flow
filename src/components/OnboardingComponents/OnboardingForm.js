@@ -184,7 +184,7 @@ OnboardingForm.propTypes = {
   step: PropTypes.number,
 };
 
-const phoneRegex = RegExp(/^[+]1 [(][0-9]{1,4}[)] [0-9]{3} [0-9]{4}$/);
+const phoneRegex = RegExp(/^[+]55 [(][0-9]{1,3}[)] [0-9]{3} [0-9]{4}$/);
 
 const validationSchema = yup.object({
   firstName: yup.string().required('First name is required'),
@@ -197,6 +197,7 @@ const validationSchema = yup.object({
     .string()
     .email('Invalid email format')
     .required('Email is required'),
+    
   projectValue: yup
     .string()
     .test(
@@ -204,8 +205,12 @@ const validationSchema = yup.object({
       'Enter Project Value',
       (val) => +stripCurrency(val) >= 1
     ),
-  projectDescription: yup.string(),
-  cnpj: yup.string().test('company exists', 'Enter a valid CNPJ', function () {
+
+  projectDescription: yup
+    .string()
+    .required('Project Description is required'),
+
+  cnpj: yup.string().test('company exists', 'Insira o CNPJ', function () {
     return this.parent.company;
   }),
   company: yup.object(),

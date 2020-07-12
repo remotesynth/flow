@@ -6,7 +6,6 @@ import { Loader } from './Loader';
 
 const name = 'cnpj';
 const mask = [
-  '(',
   /\d/,
   /\d/,
   '.',
@@ -25,7 +24,6 @@ const mask = [
   '-',
   /\d/,
   /\d/,
-  ')',
 ];
 const CnpjInput = () => {
   const { setFieldValue, values } = useForm();
@@ -34,6 +32,11 @@ const CnpjInput = () => {
     const { value } = e.target;
     const formatted = value.replace(/\D/g, '');
     setFieldValue(name, value, false);
+
+    if (formatted.length < 14) {
+      setIsLoading(false);
+    }
+
     if (formatted.length === 14) {
       setIsLoading(true);
       fetch(
@@ -69,7 +72,7 @@ const CnpjInput = () => {
       {isLoading ? (
         <Loader />
       ) : (
-        <CompanyName>{values.company?.name ?? 'No match'}</CompanyName>
+        <CompanyName>{values.company?.name ?? 'Por favor insira um CNPJ válido'}</CompanyName>
       )}
     </>
   );
