@@ -5,7 +5,7 @@ import upperFirst from 'lodash/upperFirst';
 import camelCase from 'lodash/camelCase';
 import { graphql } from 'gatsby';
 
-import components, { Layout } from '../components/index';
+import components, { LayoutForm } from '../components/index';
 
 // this minimal GraphQL query ensures that when 'gatsby develop' is running,
 // any changes to content files are reflected in browser
@@ -23,9 +23,9 @@ const Standalone = (props) => {
   );
   const Component = components[component];
   return (
-    <Layout showHeader={true} showFooter={false} {...props}>
+    <LayoutForm showHeader={true} showFooter={false} {...props}>
       <Component {...props} />
-    </Layout>
+    </LayoutForm>
   );
 };
 

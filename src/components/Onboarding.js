@@ -7,7 +7,7 @@ import { navigate } from 'gatsby';
 import Stepper from './OnboardingComponents/Stepper';
 
 const STEPS = {
-  1: 'About You',
+  1: 'Sobre Você',
   2: 'About the Project',
   3: 'Company ID',
   4: 'Review',
