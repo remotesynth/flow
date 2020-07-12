@@ -42,4 +42,5 @@ export default Standalone;
 const ContainerForm = styled.div`
       margin: 25px auto;
       width: 80%;
+      box-shadow: 0px 3px 15px rgba(0,0,0,0.2);
 `;
