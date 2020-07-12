@@ -72,7 +72,7 @@ const CnpjInput = () => {
       {isLoading ? (
         <Loader />
       ) : (
-        <CompanyName>{values.company?.name ?? 'CNPJ não encontrado'}</CompanyName>
+        <CompanyName>{values.company?.name ?? 'Por favor insira um CNPJ válido'}</CompanyName>
       )}
     </>
   );

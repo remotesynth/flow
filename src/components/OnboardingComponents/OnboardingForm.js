@@ -205,7 +205,7 @@ const validationSchema = yup.object({
       (val) => +stripCurrency(val) >= 1
     ),
   projectDescription: yup.string(),
-  cnpj: yup.string().test('company exists', 'Enter a valid CNPJ', function () {
+  cnpj: yup.string().test('company exists', 'Insira o CNPJ', function () {
     return this.parent.company;
   }),
   company: yup.object(),
