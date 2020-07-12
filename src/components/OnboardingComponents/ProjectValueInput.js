@@ -15,7 +15,7 @@ const defaultMaskOptions = {
   allowDecimal: true,
   decimalSymbol: ',',
   decimalLimit: 2,
-  integerLimit: 9,
+  integerLimit: 12,
   allowNegative: false,
   allowLeadingZeroes: true,
 };
@@ -35,11 +35,11 @@ const SliderThumbIcon = () => (
 );
 
 export const stripCurrency = (str) =>
-  str.replace('R$', '').replaceAll('.', '').replaceAll(',', '.');
+  String(str).replace('R$', '').replaceAll('.', '').replaceAll(',', '.');
 /**
- *
  * @param {number} num
  * @returns {string} formatted string without the currency sign, but with thousand and decimal separators
+ * Example: "10.512,50"
  */
 export const formatCurrency = (num) => Intl.NumberFormat('pt-BR').format(num);
 
@@ -52,17 +52,13 @@ const ProjectValueInput = ({ max }) => {
     <Container>
       <Label>Value of the Project</Label>
 
-      <Input
+      <InputField
         mask={currencyMask}
         name={name}
         value={value}
         onChange={(e) => {
-          const num = +stripCurrency(e.target.value ?? '0');
           if (e.target.value) {
-            setFieldValue(
-              name,
-              num > max ? formatCurrency(max) : e.target.value.replace('R$', '')
-            );
+            setFieldValue(name, e.target.value.replace('R$', ''));
           } else {
             setFieldValue(name, '0');
           }
@@ -108,7 +104,7 @@ export const Container = styled.div`
   width: 100%;
   box-sizing: border-box;
 `;
-export const Input = styled(MaskedInput)`
+export const InputField = styled(MaskedInput)`
   padding: 15px;
   border-width: 1px;
   border-style: solid;

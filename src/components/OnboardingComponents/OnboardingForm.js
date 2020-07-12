@@ -66,7 +66,7 @@ const Step = ({ children }) => children ?? null;
 
 const FormContext = React.createContext();
 export const useForm = () => useContext(FormContext);
-const PROJECT_VALUE_MAX = 100000000;
+const PROJECT_VALUE_MAX = 20000000;
 
 const OnboardingForm = (props) => {
   const [hasSuccessfullySubmitted, setHasSuccessfullySubmitted] = useState(
@@ -156,7 +156,7 @@ const OnboardingForm = (props) => {
             name='phone'
             label='Phone'
           />
-          <Input name='email' label='Email' />
+          <Input name='email' label='Email' disabled />
         </Step>
         <Step fields={['projectValue', 'projectDescription']}>
           <ProjectValueInput max={PROJECT_VALUE_MAX} />
@@ -205,11 +205,6 @@ const validationSchema = yup.object({
       'is positive',
       'Enter Project Value',
       (val) => +stripCurrency(val) >= 1
-    )
-    .test(
-      'is <= PROJECT_VALUE_MAX',
-      "Project Value can't be greater than R$ 100,000,000",
-      (val) => +stripCurrency(val) <= PROJECT_VALUE_MAX
     ),
   projectDescription: yup.string(),
   cnpj: yup.string().test('company exists', 'Enter a valid CNPJ', function () {

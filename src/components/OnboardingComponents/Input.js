@@ -5,25 +5,36 @@ import MaskedInput from 'react-text-mask';
 import { useForm } from './OnboardingForm';
 
 const Input = (props) => {
-  const { label, mask, name, placeholder, component: InputComponent } = props;
+  const {
+    label,
+    mask,
+    name,
+    placeholder,
+    disabled,
+    component: InputComponent,
+    inputMode,
+  } = props;
   const { values, errors, touched, handleChange, handleBlur } = useForm();
   const isTouched = touched[name];
   const error = errors[name];
-  const inputProps = {
-    $valid: isTouched && !error,
-    $invalid: isTouched && !!error,
-    name,
-    onBlur: props.onBlur || handleBlur,
-    onChange: props.onChange || handleChange,
-    placeholder: placeholder || label,
-    value: props.value || values[name],
-    mask,
-    showMask: true,
-  };
+
   return (
     <Container>
       <Label>{label}</Label>
-      <InputComponent {...inputProps} onFocus={e => mask && e.target.select()} />
+      <InputComponent
+        $valid={isTouched && !error}
+        $invalid={isTouched && !!error}
+        name={name}
+        onBlur={props.onBlur || handleBlur}
+        onChange={props.onChange || handleChange}
+        placeholder={placeholder || label}
+        value={props.value || values[name]}
+        mask={mask}
+        showMask={true}
+        onFocus={(e) => mask && e.target.select()}
+        inputMode={inputMode}
+        disabled={disabled}
+      />
       {!!(touched[name] && errors[name]) && (
         <ErrorLabel>{errors[name]}</ErrorLabel>
       )}
@@ -73,6 +84,8 @@ export const InputBase = styled(MaskedInput)`
 `;
 Input.propTypes = {
   component: PropTypes.any,
+  inputMode: PropTypes.string,
+  disabled: PropTypes.bool,
   label: PropTypes.string,
   value: PropTypes.string,
   placeholder: PropTypes.string,
@@ -88,4 +101,5 @@ Input.defaultProps = {
   mask: false,
   formatValue: (e) => e.target.value,
   component: InputBase,
+  disabled: false,
 };
