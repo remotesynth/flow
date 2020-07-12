@@ -141,6 +141,5 @@ const TermsLabel = styled.label`
 `;
 const Checkbox = styled.input`
   display: block;
-  height: 100%;
   margin-right: 10px;
 `;
