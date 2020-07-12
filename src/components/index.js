@@ -14,8 +14,6 @@ import SectionPricing from './SectionPricing';
 import SectionReviews from './SectionReviews';
 import SubscribeForm from './SubscribeForm';
 import Layout from './Layout';
-import LayoutForm from './LayoutForm';
-
 import Onboarding from './Onboarding';
 
 export {
@@ -35,7 +33,6 @@ export {
   SectionReviews,
   SubscribeForm,
   Layout,
-  LayoutForm,
   Onboarding,
 };
 
@@ -56,6 +53,5 @@ export default {
   SectionReviews,
   SubscribeForm,
   Layout,
-  LayoutForm,
   Onboarding,
 };

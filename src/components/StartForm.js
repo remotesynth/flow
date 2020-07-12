@@ -26,12 +26,18 @@ const StartForm = () => {
   return (
     <form
       name='startForm'
+      data-netlify-honeypot='bot-field'
+      data-netlify='true'
       id='start-form'
       className='start-form'
       onSubmit={handleSubmit}
     >
       <input type='hidden' name='form-name' value='startForm' />
-
+      <div className='screen-reader-text'>
+        <label>
+          Don&apos;t fill this out if you&apos;re human: <input name='bot-field' />
+        </label>
+      </div>
       <div className='form-row'>
         <label>
           <span className='screen-reader-text'>Email Comercial</span>
