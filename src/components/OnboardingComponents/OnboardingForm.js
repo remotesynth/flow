@@ -197,7 +197,6 @@ const validationSchema = yup.object({
     .string()
     .email('Invalid email format')
     .required('Email is required'),
-    
   projectValue: yup
     .string()
     .test(
@@ -205,11 +204,9 @@ const validationSchema = yup.object({
       'Enter Project Value',
       (val) => +stripCurrency(val) >= 1
     ),
-
   projectDescription: yup
     .string()
     .required('Project Description is required'),
-
   cnpj: yup.string().test('company exists', 'Insira o CNPJ', function () {
     return this.parent.company;
   }),
