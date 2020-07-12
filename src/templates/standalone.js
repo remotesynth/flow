@@ -23,7 +23,7 @@ const Standalone = (props) => {
   );
   const Component = components[component];
   return (
-    <Layout showHeader={false} showFooter={false} {...props}>
+    <Layout showHeader={true} showFooter={false} {...props}>
       <Component {...props} />
     </Layout>
   );
