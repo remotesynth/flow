@@ -14,7 +14,7 @@ const STEPS = {
 };
 const Onboarding = (props) => {
   const [step, setStep] = useState(1);
-  const { location } = props;
+  const { location, pageContext } = props;
   const email = get(location, 'state.email', null);
   useEffect(() => {
     if (!email) {
@@ -24,7 +24,8 @@ const Onboarding = (props) => {
   return (
     <Container>
       <StepperContainer>
-        <Title>Sign Up</Title>
+        <Logo src={pageContext.frontmatter?.meta?.logo} />
+        <Title>{pageContext.frontmatter.title}</Title>
         <Stepper current={step} setStep={setStep} steps={STEPS} />
       </StepperContainer>
       <FormContainer>
@@ -47,7 +48,9 @@ Onboarding.propTypes = {
   }),
   pageContext: PropTypes.shape({
     frontmatter: PropTypes.shape({
-      steps: PropTypes.object,
+      meta: PropTypes.shape({
+        logo: PropTypes.string,
+      }),
       title: PropTypes.string,
     }),
   }),
@@ -56,7 +59,7 @@ Onboarding.propTypes = {
 export default Onboarding;
 
 const Container = styled.div`
-  min-height: 90vh;
+  min-height: 100vh;
   background: white;
   display: flex;
 `;
@@ -84,7 +87,12 @@ const Title = styled.h2`
   font-size: 1.8rem;
   color: white;
   margin: 0;
+  text-align: center;
 `;
 const StepTitle = styled.h3`
   font-size: 1.8rem;
+`;
+const Logo = styled.img`
+  width: 80px;
+  margin: auto;
 `;
