@@ -35,7 +35,7 @@ const SliderThumbIcon = () => (
 );
 
 export const stripCurrency = (str) =>
-  String(str).replace('R$', '').replaceAll('.', '').replaceAll(',', '.');
+  String(str).replace('R$', '').replace(/[.]/g, '').replace(/[,]/g, '.');
 /**
  * @param {number} num
  * @returns {string} formatted string without the currency sign, but with thousand and decimal separators
