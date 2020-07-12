@@ -6,7 +6,6 @@ import { Loader } from './Loader';
 
 const name = 'cnpj';
 const mask = [
-  '(',
   /\d/,
   /\d/,
   '.',
@@ -25,7 +24,6 @@ const mask = [
   '-',
   /\d/,
   /\d/,
-  ')',
 ];
 const CnpjInput = () => {
   const { setFieldValue, values } = useForm();
@@ -74,7 +72,7 @@ const CnpjInput = () => {
       {isLoading ? (
         <Loader />
       ) : (
-        <CompanyName>{values.company?.name ?? 'No match'}</CompanyName>
+        <CompanyName>{values.company?.name ?? 'CNPJ não encontrado'}</CompanyName>
       )}
     </>
   );
