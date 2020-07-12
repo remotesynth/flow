@@ -75,17 +75,31 @@ const Card = styled.div`
   border-radius: 10px;
   line-height: 1.2;
   transition: all ease 0.1s;
+  @media (max-width: 768px) {
+    margin: 0;
+  }
 `;
 const Line = styled.div`
   display: flex;
   justify-content: flex-end;
   margin: 20px 0;
+  @media (max-width: 768px) {
+    flex-direction: column;
+    margin-bottom: 1rem;
+    :last-child{
+      flex-direction: column-reverse;
+    }
+  }
 `;
 const Block = styled.div`
   width: 50%;
   font-size: 0.75rem;
   p {
     margin: 0;
+  }
+  @media (max-width: 768px) {
+    margin-bottom: 1rem;
+    width: 80%;
   }
 `;
 const Name = styled.span`

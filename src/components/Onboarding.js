@@ -24,9 +24,9 @@ const Onboarding = (props) => {
   return (
     <Container>
       <StepperContainer>
-        <Logo src={pageContext.frontmatter?.meta?.logo} />
         <Title>{pageContext.frontmatter.title}</Title>
         <Stepper current={step} setStep={setStep} steps={STEPS} />
+        <Logo src={pageContext.frontmatter?.meta?.logo} />
       </StepperContainer>
       <FormContainer>
         <StepTitle>{STEPS[step]}</StepTitle>
@@ -62,37 +62,64 @@ const Container = styled.div`
   min-height: 100vh;
   background: white;
   display: flex;
+  overflow-y: visible;
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 const StepperContainer = styled.div`
   min-height: 100%;
   background: linear-gradient(to right, #438945, #73bb75);
   width: 30%;
-  display: grid;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  flex-shrink: 0;
   box-sizing: border-box;
-  padding: 2rem;
+  padding: 1rem;
+  z-index: 1000;
+  @media (max-width: 768px) {
+    min-height: unset;
+    height: 64px;
+    width: 100%;
+    position: fixed;
+    background: white;
+  }
 `;
 const FormContainer = styled.div`
   min-height: 100%;
   width: 70%;
-  padding: 2rem;
   box-sizing: border-box;
+  padding: 2rem 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   box-shadow: -2px 0 5px #438945;
+  flex-shrink: 0;
+  @media (max-width: 768px) {
+    width: 100%;
+    min-height: 100vh;
+    padding-top: 6rem;
+    box-shadow: none;
+  }
 `;
 const Title = styled.h2`
   font-size: 1.8rem;
   color: white;
-  margin: 0;
+  margin: 0 0 2rem 0;
   text-align: center;
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 const StepTitle = styled.h3`
   font-size: 1.8rem;
 `;
 const Logo = styled.img`
   width: 80px;
-  margin: auto;
+  margin: 2rem auto 0 auto;
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;

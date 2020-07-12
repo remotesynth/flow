@@ -240,12 +240,16 @@ const ButtonContainer = styled.div`
   box-sizing: border-box;
   margin: 2rem 0;
   flex-flow: row-reverse;
+  margin-bottom: 2rem;
 `;
 
 const InputGroup = styled.div`
   display: flex;
   justify-content: space-between;
   margin-bottom: 2rem;
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 const Textarea = styled.textarea`
   padding: 15px;
