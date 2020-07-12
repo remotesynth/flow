@@ -25,9 +25,6 @@ const Summary = () => {
           </Block>
         </Line>
         <Line>
-        <Block>
-            <p>{values.projectDescription}</p>
-          </Block>
           <Block>
             <p>
               {address.street}, {address.number}
@@ -41,9 +38,6 @@ const Summary = () => {
         </Line>
         <Line>
           <Block>
-            <ProjectValue>R$ {values.projectValue}</ProjectValue>
-          </Block>
-          <Block>
             <TermsLabel isAccepted={isAccepted}>
               <Checkbox
                 type='checkbox'
@@ -56,6 +50,9 @@ const Summary = () => {
                 and Conditions
               </span>
             </TermsLabel>
+          </Block>
+          <Block>
+            <ProjectValue>R$ {values.projectValue}</ProjectValue>
           </Block>
         </Line>
       </Card>
