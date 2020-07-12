@@ -34,6 +34,11 @@ const CnpjInput = () => {
     const { value } = e.target;
     const formatted = value.replace(/\D/g, '');
     setFieldValue(name, value, false);
+
+    if (formatted.length < 14) {
+      setIsLoading(false);
+    }
+
     if (formatted.length === 14) {
       setIsLoading(true);
       fetch(
@@ -60,8 +65,6 @@ const CnpjInput = () => {
           setFieldValue('company', null);
           console.error(err);
         });
-    } else{
-      setIsLoading(false);
     }
   };
 
