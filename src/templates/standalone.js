@@ -4,6 +4,7 @@ import get from 'lodash/get';
 import upperFirst from 'lodash/upperFirst';
 import camelCase from 'lodash/camelCase';
 import { graphql } from 'gatsby';
+import styled from 'styled-components';
 
 import components, { Layout } from '../components/index';
 
@@ -24,7 +25,9 @@ const Standalone = (props) => {
   const Component = components[component];
   return (
     <Layout showHeader={false} showFooter={false} {...props}>
-      <Component {...props} />
+      <ContainerForm>
+          <Component {...props} />
+      </ContainerForm>
     </Layout>
   );
 };
@@ -35,3 +38,8 @@ Standalone.propTypes = {
   }),
 };
 export default Standalone;
+
+const ContainerForm = styled.div`
+      margin: 25px auto;
+      width: 80%;
+`;
