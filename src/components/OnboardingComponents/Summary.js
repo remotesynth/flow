@@ -4,7 +4,7 @@ import { useForm } from './OnboardingForm';
 import { ErrorLabel } from './Input';
 
 const Summary = () => {
-  const { values, errors, touched, setFieldValue, hasSuccessfullySubmitted } = useForm();
+  const { values, errors, touched, setFieldValue } = useForm();
   const { address } = values.company;
   const isAccepted = values.terms;
 
@@ -58,11 +58,6 @@ const Summary = () => {
       </Card>
       {touched.terms && !!errors.terms && (
         <ErrorLabel>{errors.terms}</ErrorLabel>
-      )}
-      {hasSuccessfullySubmitted && (
-        <SuccessMessage>
-          Thank you, we sent you an email with a link to access the dashboard
-        </SuccessMessage>
       )}
     </>
   );
@@ -135,9 +130,3 @@ const Checkbox = styled.input`
   height: 100%;
   margin-right: 10px;
 `;
-const SuccessMessage = styled.div`
-  font-size: 1.25rem;
-  font-weight: 700;
-  text-align: center;
-  line-height: 1.2;
-`
