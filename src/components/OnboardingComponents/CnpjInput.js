@@ -60,6 +60,8 @@ const CnpjInput = () => {
           setFieldValue('company', null);
           console.error(err);
         });
+    } else{
+      setIsLoading(false);
     }
   };
 
