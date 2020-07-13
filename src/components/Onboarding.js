@@ -76,7 +76,6 @@ const StepperContainer = styled.div`
   justify-content: center;
   align-items: center;
   flex-shrink: 0;
-  box-sizing: border-box;
   padding: 1rem;
   z-index: 1000;
   @media (max-width: 768px) {
@@ -90,7 +89,6 @@ const StepperContainer = styled.div`
 const FormContainer = styled.div`
   min-height: 100%;
   width: 70%;
-  box-sizing: border-box;
   padding: 2rem 0;
   display: flex;
   flex-direction: column;
