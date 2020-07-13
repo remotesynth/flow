@@ -112,7 +112,7 @@ const Title = styled.h2`
 `;
 const StepTitle = styled.h3`
   font-size: 1.2rem;
-  margin: 10px 0 50px 0;
+  margin: 30px 0 50px 0;
 `;
 const Logo = styled.img`
   width: 110px;
