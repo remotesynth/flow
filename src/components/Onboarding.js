@@ -26,9 +26,9 @@ const Onboarding = (props) => {
       <StepperContainer>
         <Title>{pageContext.frontmatter.title}</Title>
         <Stepper current={step} setStep={setStep} steps={STEPS} />
-        <Logo src={pageContext.frontmatter?.meta?.logo} />
       </StepperContainer>
       <FormContainer>
+      <Logo src={pageContext.frontmatter?.meta?.logo} />
         <StepTitle>{STEPS[step]}</StepTitle>
         <OnboardingForm
           step={step}
@@ -92,6 +92,7 @@ const FormContainer = styled.div`
   padding: 2rem 0;
   display: flex;
   flex-direction: column;
+  margin-top: 35px;
   align-items: center;
   flex-shrink: 0;
   @media (max-width: 768px) {
