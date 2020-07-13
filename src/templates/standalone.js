@@ -44,6 +44,7 @@ const ContainerForm = styled.div`
       width: 55%;
       box-shadow: 0px 3px 15px rgba(0,0,0,0.2);
       @media (max-width: 768px) {
-        display:none;
+        width: 100%;
+        margin: 0;
       }
 `;

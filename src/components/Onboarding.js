@@ -24,13 +24,11 @@ const Onboarding = (props) => {
   return (
     <Container>
       <StepperContainer>
-
         <Title>{pageContext.frontmatter.title}</Title>
         <Stepper current={step} setStep={setStep} steps={STEPS} />
       </StepperContainer>
       <FormContainer>
       <Logo src={pageContext.frontmatter?.meta?.logo} />
-
         <StepTitle>{STEPS[step]}</StepTitle>
         <OnboardingForm
           step={step}
@@ -61,7 +59,7 @@ Onboarding.propTypes = {
 export default Onboarding;
 
 const Container = styled.div`
-  min-height: 100vh;
+  min-height: 100%;
   background: white;
   display: flex;
   overflow-y: visible;
@@ -94,13 +92,12 @@ const FormContainer = styled.div`
   padding: 2rem 0;
   display: flex;
   flex-direction: column;
-  margin-top: 35px;
   align-items: center;
   flex-shrink: 0;
   @media (max-width: 768px) {
     width: 100%;
     min-height: 100vh;
-    padding-top: 6rem;
+    padding-top: 4.5rem;
     box-shadow: none;
   }
 `;
@@ -114,11 +111,12 @@ const Title = styled.h2`
   }
 `;
 const StepTitle = styled.h3`
-  font-size: 1.8rem;
+  font-size: 1.2rem;
+  margin: 10px 0 50px 0;
 `;
 const Logo = styled.img`
-  width: 80px;
-  margin: 2rem auto 0 auto;
+  width: 110px;
+  margin: 0;
   @media (max-width: 768px) {
     display: none;
   }
