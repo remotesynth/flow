@@ -220,13 +220,13 @@ export default OnboardingForm;
 
 const Container = styled.div`
   width: 80%;
-  max-width: 460px;
+  max-width: 85%;
   margin: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  min-height: 500px;
+  min-height: 500px;      
 `;
 const FieldsContainer = styled.div`
   width: 100%;
