@@ -81,7 +81,7 @@ const StepperContainer = styled.div`
   @media (max-width: 768px) {
     min-height: unset;
     height: 64px;
-    width: 80%;
+    width: 90%;
     position: fixed;
     background: white;
   }
@@ -97,7 +97,7 @@ const FormContainer = styled.div`
   @media (max-width: 768px) {
     width: 100%;
     min-height: 100vh;
-    padding-top: 4.5rem;
+    padding-top: 6rem;
     box-shadow: none;
   }
 `;
@@ -117,7 +117,4 @@ const StepTitle = styled.h3`
 const Logo = styled.img`
   width: 110px;
   margin: 0;
-  @media (max-width: 768px) {
-    display: none;
-  }
 `;

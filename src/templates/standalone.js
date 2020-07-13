@@ -41,13 +41,11 @@ export default Standalone;
 
 const ContainerForm = styled.div`
       margin: 70px auto 80px auto;
-      width: 55%;
+      width: 60%;
       box-shadow: 0px 3px 15px rgba(0,0,0,0.2);
       @media (max-width: 768px) {
         width: 100%;
         margin: 0;
       }
-      @media (max-width: 1400px) {
-        width: 75%;
-      }
+
 `;
