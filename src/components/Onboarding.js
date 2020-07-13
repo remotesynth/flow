@@ -24,12 +24,13 @@ const Onboarding = (props) => {
   return (
     <Container>
       <StepperContainer>
-      <Logo src={pageContext.frontmatter?.meta?.logo} />
+
         <Title>{pageContext.frontmatter.title}</Title>
         <Stepper current={step} setStep={setStep} steps={STEPS} />
       </StepperContainer>
       <FormContainer>
-        
+      <Logo src={pageContext.frontmatter?.meta?.logo} />
+
         <StepTitle>{STEPS[step]}</StepTitle>
         <OnboardingForm
           step={step}

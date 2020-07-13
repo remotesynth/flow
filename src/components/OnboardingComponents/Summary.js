@@ -21,7 +21,7 @@ const Summary = () => {
           </Block>
           <Block>
             <Company>{values.company.name}</Company>
-            <Secondary>CNPJ: {values.cnpj}</Secondary>
+            <Secondary>{values.cnpj}</Secondary>
           </Block>
         </Line>
         <Line>
@@ -51,9 +51,7 @@ const Summary = () => {
                 onChange={(e) => setFieldValue('terms', e.target.checked)}
               />
               <span>
-                Accept Terms
-                <br />
-                and Conditions
+                Accept Terms and Conditions
               </span>
             </TermsLabel>
           </Block>
