@@ -81,7 +81,7 @@ const StepperContainer = styled.div`
   @media (max-width: 768px) {
     min-height: unset;
     height: 64px;
-    width: 100%;
+    width: 80%;
     position: fixed;
     background: white;
   }
