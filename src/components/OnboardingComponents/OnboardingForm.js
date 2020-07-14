@@ -67,7 +67,7 @@ const Step = ({ children }) => children ?? null;
 
 const FormContext = React.createContext();
 export const useForm = () => useContext(FormContext);
-const PROJECT_VALUE_MAX = 20000000;
+const PROJECT_VALUE_MAX = 2000000;
 
 const onSubmit = async (values) => {
   const formData = new FormData();
