@@ -47,6 +47,8 @@
 
 .site-navigation {
   margin-left: auto;
+  display: flex;
+  align-items: center;
 
   .menu {
     list-style: none;

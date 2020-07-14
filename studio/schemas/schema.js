@@ -28,6 +28,7 @@ import review_item from './review_item.js';
 import section_contact from './section_contact.js';
 import action from './action.js';
 import onboarding from './onboarding.js';
+import dashboard from './dashboard.js';
 
 // Then we give our schema to the builder and provide the result to Sanity
 export default createSchema({
@@ -60,5 +61,6 @@ export default createSchema({
     section_contact,
     action,
     onboarding,
+    dashboard,
   ]),
 });

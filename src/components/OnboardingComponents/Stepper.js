@@ -7,8 +7,8 @@ const Stepper = ({ current, steps, setStep }) => {
   return (
     <Container>
       {entries.map(([key, step]) => (
-        <>
-          <Step key={key} $step={key} $isCurrent={current == key}>
+        <React.Fragment key={key}>
+          <Step $step={key} $isCurrent={current == key}>
             <StepIcon
               $isComplete={key < current}
               onClick={key < current ? () => setStep(+key) : null}
@@ -19,7 +19,7 @@ const Stepper = ({ current, steps, setStep }) => {
             <StepName>{step}</StepName>
           </Step>
           {key != entries.length && <StepTrail $isBold={key < current} />}
-        </>
+        </React.Fragment>
       ))}
     </Container>
   );

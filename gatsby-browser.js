@@ -3,6 +3,8 @@
  *
  * See: https://www.gatsbyjs.org/docs/browser-apis/
  */
+require("firebase/auth");
+require("firebase/firestore");
 
 exports.onInitialClientRender = () => {
     if ('onGatsbyInitialClientRender' in window && typeof window.onGatsbyInitialClientRender === 'function') {

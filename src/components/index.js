@@ -15,6 +15,7 @@ import SectionReviews from './SectionReviews';
 import SubscribeForm from './SubscribeForm';
 import Layout from './Layout';
 import Onboarding from './Onboarding';
+import Dashboard from './Dashboard';
 
 export {
   ActionLink,
@@ -34,6 +35,7 @@ export {
   SubscribeForm,
   Layout,
   Onboarding,
+  Dashboard,
 };
 
 export default {
@@ -54,4 +56,5 @@ export default {
   SubscribeForm,
   Layout,
   Onboarding,
+  Dashboard,
 };
