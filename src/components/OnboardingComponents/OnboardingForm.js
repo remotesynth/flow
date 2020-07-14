@@ -71,10 +71,10 @@ const Step = ({ children }) => children ?? null;
 
 const FormContext = React.createContext();
 export const useForm = () => useContext(FormContext);
-const PROJECT_VALUE_MAX = 20000000;
+const PROJECT_VALUE_MAX = 2000000;
 
 const onSubmit = async (values) => {
-  const zapPromise = 1;//sendDataToZapier(values); // ANCHOR
+  const zapPromise = sendDataToZapier(values);
   const firebasePromise = sendFirebaseSignInEmail(values.email);
   await Promise.all([zapPromise, firebasePromise]);
   navigate('/thank-you');
