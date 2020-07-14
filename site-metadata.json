@@ -24,7 +24,7 @@
                 "url": "blog"
             }
         ],
-        "title": "flow",
+        "title": "Flow",
         "type": "header"
     },
     "footer": {
@@ -49,6 +49,11 @@
                 "label": "Blog",
                 "type": "action",
                 "url": "/blog"
+            },
+            {
+                "label": "Dashboard",
+                "type": "action",
+                "url": "/dashboard"
             }
         ],
         "nav_title": "Sobre a flow",
@@ -78,7 +83,7 @@
         "tagline": "",
         "type": "footer"
     },
-    "title": "flow",
+    "title": "Flow",
     "author": "André Antonelli",
     "siteUrl": "https://flowbr.com/",
     "description": "A plataforma flow é especialista em converter altos investimentos em mensalidades adequadas ao orçamento do seu negócio.",

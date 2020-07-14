@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
-export const Loader = () => (
-  <LoaderRoot>
+export const Loader = ({ centered }) => (
+  <LoaderRoot $centered={centered}>
     <div></div>
     <div></div>
     <div></div>
@@ -10,11 +10,11 @@ export const Loader = () => (
   </LoaderRoot>
 );
 const LoaderRoot = styled.div`
-  display: inline-block;
+  display: ${(props) => (props.$centered ? 'block' : 'inline-block')};
   position: relative;
   width: 25px;
   height: 25px;
-  margin: 0 15px;
+  margin: ${(props) => (props.$centered ? '0 auto' : '0 15px')};
   div {
     position: absolute;
     top: 10px;

@@ -32,6 +32,20 @@ module.exports = {
                 sourceUrlPath: `fields.url`,
                 pageContextProperty: `menus`,
             }
-        }
+        },
+        {
+            resolve: "gatsby-plugin-firebase",
+            options: {
+              credentials: {
+                apiKey: "AIzaSyB4HA801Tmh8z63K9Osl2hbWSZCOP4ndkc",
+                authDomain: "flow-br.firebaseapp.com",
+                databaseURL: "https://flow-br.firebaseio.com",
+                projectId: "flow-br",
+                storageBucket: "flow-br.appspot.com",
+                messagingSenderId: "432679425264",
+                appId: "1:432679425264:web:da417392f3a957f00a1e35"
+              }
+            }
+          }
     ]
 };

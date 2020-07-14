@@ -8,6 +8,10 @@ import ProjectValueInput, { stripCurrency } from './ProjectValueInput';
 import CnpjInput from './CnpjInput';
 import Summary from './Summary';
 import { navigate } from 'gatsby';
+import {
+  sendDataToZapier,
+  sendFirebaseSignInEmail,
+} from './onboarding.requests';
 
 const Wizard = ({ step, setStep, children }) => {
   const { validateForm, setFieldTouched, submitForm, isSubmitting } = useForm();
@@ -70,42 +74,10 @@ export const useForm = () => useContext(FormContext);
 const PROJECT_VALUE_MAX = 20000000;
 
 const onSubmit = async (values) => {
-  const formData = new FormData();
-  formData.append('email', values.email);
-  formData.append('firstName', values.firstName);
-  formData.append('lastName', values.lastName);
-  formData.append('phone', values.phone);
-  formData.append('projectValue', stripCurrency(values.projectValue));
-  formData.append('projectDescription', values.projectDescription);
-  formData.append('cnpj', values.cnpj.replace(/\D/g, ''));
-  formData.append('companyName', values.company.name);
-  formData.append('companyFoundedDate', values.company.founded);
-  formData.append('companyPhone', values.company.phone);
-  formData.append('companyAddress', JSON.stringify(values.company.address));
-  formData.append(
-    'companyPrimaryActivity',
-    JSON.stringify(values.company.primary_activity)
-  );
-  formData.append(
-    'companyLegalNature',
-    JSON.stringify(values.company.legal_nature)
-  );
-  const requestOptions = {
-    method: 'POST',
-    body: formData,
-    redirect: 'follow',
-  };
-
-  const resp = await fetch(
-    'https://hooks.zapier.com/hooks/catch/142211/ozon6ju/',
-    requestOptions
-  );
-  const data = await resp.json();
-  console.log('Zapier hook response: ', data);
-  if (data.status === 'success') {
-    navigate('/thank-you');
-  }
-  return data;
+  const zapPromise = 1;//sendDataToZapier(values); // ANCHOR
+  const firebasePromise = sendFirebaseSignInEmail(values.email);
+  await Promise.all([zapPromise, firebasePromise]);
+  navigate('/thank-you');
 };
 const OnboardingForm = (props) => {
   const FormikBag = useFormik({
@@ -226,12 +198,12 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  min-height: 500px; 
+  min-height: 500px;
   @media (max-width: 768px) {
     margin: 20px;
     width: 90%;
     max-width: 100%;
-  }     
+  }
 `;
 const FieldsContainer = styled.div`
   width: 100%;
