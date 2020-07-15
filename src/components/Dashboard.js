@@ -167,9 +167,15 @@ const DescriptionIcon = () => (
 function getStatusLabel(status) {
   switch (status) {
     case 'appointmentscheduled':
-      return 'Appointment Scheduled';
+      return 'Em análise';
     case 'qualifiedtobuy':
-      return 'Qualified To Buy';
+      return 'Crédito aprovado';
+    case 'contractsent':
+      return 'Contrato enviado';
+    case 'closedwon':
+      return 'Contrato assinado';
+    case 'closedlost':
+      return 'Solicitação cancelada';
     default:
       return status;
   }
