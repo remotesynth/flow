@@ -41,25 +41,18 @@ const StartForm = () => {
     <FormContext.Provider value={FormikBag}>
       <form
         name='startForm'
-        data-netlify-honeypot='bot-field'
-        data-netlify='true'
         id='start-form'
         className='start-form'
       >
         <input type='hidden' name='form-name' value='startForm' />
-        <div className='screen-reader-text'>
-          <label>
-            Don&apos;t fill this out if you&apos;re human:
-            <input name='bot-field' />
-          </label>
-        </div>
+
         <div className='form-row'>
           <label>
             <span className='screen-reader-text'>Email Comercial</span>
             <Input
               name='email'
               noLabel
-              placeholder='Seu email comercial'
+              placeholder='Seu Email Comercial'
               component={EmailInput}
               paddingX={0}
               paddingY={0}
@@ -67,7 +60,7 @@ const StartForm = () => {
           </label>
         </div>
         <SubmitButton onClick={FormikBag.submitForm}>
-          Começar Agora
+          {FormikBag.isSubmitting ? 'Aguarde...' : 'Começar Agora'}
         </SubmitButton>
       </form>
     </FormContext.Provider>

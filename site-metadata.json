@@ -22,13 +22,19 @@
                 "label": "Blog",
                 "type": "action",
                 "url": "blog"
+            },
+            {
+                "label": "Acessar",
+                "primary": true,
+                "type": "action",
+                "url": "/"
             }
         ],
         "title": "Flow",
         "type": "header"
     },
     "footer": {
-        "content": "&copy; Flow Brasil. Todos os direitos reservados.",
+        "content": "&copy; Flowpex intermediação de negócios LTDA. Todos os direitos reservados.",
         "has_nav": true,
         "has_social": true,
         "has_subscribe": false,

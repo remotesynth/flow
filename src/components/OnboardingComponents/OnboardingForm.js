@@ -39,13 +39,13 @@ const Wizard = ({ step, setStep, children }) => {
     e.preventDefault();
     setStep((prev) => prev - 1);
   };
-  const buttonText = isLastStep ? 'Submit' : 'Next';
+  const buttonText = isLastStep ? 'Enviar' : 'Próximo';
   return (
     <Container>
       <FieldsContainer>{currentStep}</FieldsContainer>
       <ButtonContainer>
         <Button type='button' onClick={handleNext}>
-          {isSubmitting ? 'Submitting...' : buttonText}
+          {isSubmitting ? 'Enviando...' : buttonText}
         </Button>
         {step >= 2 && (
           <Button
@@ -53,7 +53,7 @@ const Wizard = ({ step, setStep, children }) => {
             type='button'
             className='button secondary'
           >
-            Back
+            Voltar
           </Button>
         )}
       </ButtonContainer>
