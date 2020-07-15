@@ -13,14 +13,16 @@ const Input = (props) => {
     disabled,
     component: InputComponent,
     inputMode,
+    paddingX,
+    paddingY,
+    noLabel,
   } = props;
   const { values, errors, touched, handleChange, handleBlur } = useForm();
   const isTouched = touched[name];
   const error = errors[name];
-
   return (
-    <Container>
-      <Label>{label}</Label>
+    <Container $paddingX={paddingX} $paddingY={paddingY}>
+      <Label $hidden={noLabel}>{label}</Label>
       <InputComponent
         $valid={isTouched && !error}
         $invalid={isTouched && !!error}
@@ -45,7 +47,7 @@ const Input = (props) => {
 export default Input;
 
 const Container = styled.div`
-  padding: 0 15px;
+  padding: ${(props) => `${props.$paddingY}px ${props.$paddingX}px`};
   margin-bottom: 10px;
   width: 100%;
   box-sizing: border-box;
@@ -57,6 +59,7 @@ export const Label = styled.label`
   color: #000000;
 `;
 export const ErrorLabel = styled.label`
+  display: block;
   font-size: 0.75rem;
   opacity: 0.8;
   color: #ca3244;
@@ -95,6 +98,9 @@ Input.propTypes = {
   onChange: PropTypes.func,
   onBlur: PropTypes.func,
   formatValue: PropTypes.func,
+  paddingX: PropTypes.number,
+  paddingY: PropTypes.number,
+  noLabel: PropTypes.bool,
 };
 Input.defaultProps = {
   value: null,
@@ -102,4 +108,7 @@ Input.defaultProps = {
   formatValue: (e) => e.target.value,
   component: InputBase,
   disabled: false,
+  paddingX: 15,
+  paddingY: 15,
+  noLabel: false,
 };
