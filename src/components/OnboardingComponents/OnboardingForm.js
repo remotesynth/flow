@@ -69,7 +69,7 @@ Wizard.propTypes = {
 
 const Step = ({ children }) => children ?? null;
 
-const FormContext = React.createContext();
+export const FormContext = React.createContext();
 export const useForm = () => useContext(FormContext);
 const PROJECT_VALUE_MAX = 2000000;
 
@@ -78,6 +78,44 @@ const onSubmit = async (values) => {
   const firebasePromise = sendFirebaseSignInEmail(values.email);
   await Promise.all([zapPromise, firebasePromise]);
   navigate('/thank-you');
+};
+const phoneMask = (val) => {
+  const num = val.replace(/\D/g, '');
+  if (num.length >= 11) {
+    return [
+      '(',
+      /\d/,
+      /\d/,
+      ')',
+      ' ',
+      /\d/,
+      /\d/,
+      /\d/,
+      /\d/,
+      /\d/,
+      '-',
+      /\d/,
+      /\d/,
+      /\d/,
+      /\d/,
+    ];
+  }
+  return [
+    '(',
+    /\d/,
+    /\d/,
+    ')',
+    ' ',
+    /\d/,
+    /\d/,
+    /\d/,
+    /\d/,
+    '-',
+    /\d/,
+    /\d/,
+    /\d/,
+    /\d/,
+  ];
 };
 const OnboardingForm = (props) => {
   const FormikBag = useFormik({
@@ -103,29 +141,7 @@ const OnboardingForm = (props) => {
             <Input name='firstName' label='First Name' />
             <Input name='lastName' label='Last Name' />
           </InputGroup>
-          <Input
-            mask={[
-              '+',
-              '1',
-              ' ',
-              '(',
-              /[1-9]/,
-              /\d/,
-              /\d/,
-              ')',
-              ' ',
-              /\d/,
-              /\d/,
-              /\d/,
-              ' ',
-              /\d/,
-              /\d/,
-              /\d/,
-              /\d/,
-            ]}
-            name='phone'
-            label='Phone'
-          />
+          <Input mask={phoneMask} name='phone' label='Phone' />
           <Input name='email' label='Email' disabled />
         </Step>
         <Step fields={['projectValue', 'projectDescription']}>
@@ -156,7 +172,7 @@ OnboardingForm.propTypes = {
   step: PropTypes.number,
 };
 
-const phoneRegex = RegExp(/^[+]1 [(][0-9]{1,4}[)] [0-9]{3} [0-9]{4}$/);
+const phoneRegex = RegExp(/^([(][1-9]{2}[)] )?[0-9]{4,5}[-]?[0-9]{4}$/);
 
 const validationSchema = yup.object({
   firstName: yup.string().required('First name is required'),
@@ -176,9 +192,7 @@ const validationSchema = yup.object({
       'Enter Project Value',
       (val) => +stripCurrency(val) >= 1
     ),
-  projectDescription: yup
-    .string()
-    .required('Project Description is required'),
+  projectDescription: yup.string().required('Project Description is required'),
   cnpj: yup.string().test('company exists', 'Insira o CNPJ', function () {
     return this.parent.company;
   }),
