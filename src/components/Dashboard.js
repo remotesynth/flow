@@ -59,8 +59,8 @@ const Dashboard = (props) => {
 
 export default Dashboard;
 
-const db = firebase.firestore();
 const getDeals = async (user) => {
+  const db = firebase.firestore();
   const snapshot = await db
     .collection('Deals')
     .where('deal_email', '==', user.email)
