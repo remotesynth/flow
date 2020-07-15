@@ -171,6 +171,6 @@ function getStatusLabel(status) {
     case 'qualifiedtobuy':
       return 'Qualified To Buy';
     default:
-      return '';
+      return status;
   }
 }
