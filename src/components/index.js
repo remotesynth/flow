@@ -8,6 +8,8 @@ import SectionContent from './SectionContent';
 import SectionCta from './SectionCta';
 import SectionFaq from './SectionFaq';
 import SectionFeatures from './SectionFeatures';
+import SectionFeaturesDetailed from './SectionFeaturesDetailed';
+
 import SectionHero from './SectionHero';
 import SectionPosts from './SectionPosts';
 import SectionPricing from './SectionPricing';
@@ -28,6 +30,7 @@ export {
   SectionCta,
   SectionFaq,
   SectionFeatures,
+  SectionFeaturesDetailed,
   SectionHero,
   SectionPosts,
   SectionPricing,
@@ -49,6 +52,7 @@ export default {
   SectionCta,
   SectionFaq,
   SectionFeatures,
+  SectionFeaturesDetailed,
   SectionHero,
   SectionPosts,
   SectionPricing,

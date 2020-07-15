@@ -200,6 +200,7 @@ models:
             - section_cta
             - section_faq
             - section_features
+            - section_features_icon
             - section_hero
             - section_posts
             - section_pricing
@@ -373,6 +374,31 @@ models:
   section_features:
     type: object
     label: Features Section
+    extends:
+      - section
+    fields:
+      - type: string
+        name: subtitle
+        label: Subtitle
+        description: The subtitle of the section
+      - type: enum
+        name: background
+        label: Background
+        description: The background of the section
+        options:
+          - gray
+          - white
+        default: gray
+      - type: list
+        name: features
+        label: Features
+        items:
+          type: model
+          models:
+            - feature_item
+  section_features_icon:
+    type: object
+    label: Features Section with Icon
     extends:
       - section
     fields:

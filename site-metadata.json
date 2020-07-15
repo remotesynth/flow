@@ -49,11 +49,6 @@
                 "label": "Blog",
                 "type": "action",
                 "url": "/blog"
-            },
-            {
-                "label": "Dashboard",
-                "type": "action",
-                "url": "/dashboard"
             }
         ],
         "nav_title": "Sobre a flow",

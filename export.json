@@ -319,6 +319,7 @@
                             "section_cta",
                             "section_faq",
                             "section_features",
+                            "section_features_icon",
                             "section_hero",
                             "section_posts",
                             "section_pricing",
@@ -817,6 +818,70 @@
                 }
             ],
             "name": "section_features",
+            "labelField": "title",
+            "hideContent": true
+        },        {
+            "type": "object",
+            "label": "Features Section Icon",
+            "fields": [
+                {
+                    "type": "string",
+                    "name": "title",
+                    "label": "Title",
+                    "description": "The title of the section"
+                },
+                {
+                    "type": "string",
+                    "name": "section_id",
+                    "label": "Element ID",
+                    "description": "Element ID can be used in links to scroll the page to this section when link clicked"
+                },
+                {
+                    "type": "string",
+                    "name": "subtitle",
+                    "label": "Subtitle",
+                    "description": "The subtitle of the section"
+                },
+                {
+                    "type": "enum",
+                    "name": "background",
+                    "label": "Background",
+                    "description": "The background of the section",
+                    "options": [
+                        "gray",
+                        "white"
+                    ],
+                    "default": "gray"
+                },
+                {
+                    "type": "list",
+                    "name": "features_icon",
+                    "label": "Features Icon",
+                    "items": {
+                        "type": "model",
+                        "models": [
+                            "feature_item"
+                        ]
+                    }
+                },
+                {
+                    "type": "string",
+                    "name": "type",
+                    "label": "Object Type",
+                    "description": "The type of the object",
+                    "const": "section_features_icon",
+                    "hidden": true
+                },
+                {
+                    "type": "string",
+                    "name": "stackbit_model_type",
+                    "label": "Stackbit Model Type",
+                    "description": "Stackbit model type",
+                    "const": "object",
+                    "hidden": true
+                }
+            ],
+            "name": "section_features_icon",
             "labelField": "title",
             "hideContent": true
         },

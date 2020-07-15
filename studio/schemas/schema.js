@@ -18,6 +18,8 @@ import section_cta from './section_cta.js';
 import section_faq from './section_faq.js';
 import faq_item from './faq_item.js';
 import section_features from './section_features.js';
+import section_features_icon from './section_features_icon.js';
+
 import feature_item from './feature_item.js';
 import section_hero from './section_hero.js';
 import section_posts from './section_posts.js';
@@ -51,6 +53,7 @@ export default createSchema({
     section_faq,
     faq_item,
     section_features,
+    section_features_icon,
     feature_item,
     section_hero,
     section_posts,

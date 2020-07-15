@@ -30,6 +30,9 @@ export default {
                     "type": "section_features"
                 },
                 {
+                    "type": "section_features_icon"
+                },
+                {
                     "type": "section_hero"
                 },
                 {
