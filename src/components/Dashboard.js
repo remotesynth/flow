@@ -10,7 +10,6 @@ import { navigate } from 'gatsby';
 
 const Dashboard = (props) => {
   const [deals, setDeals] = useState(null);
-
   useEffect(
     () =>
       firebase.auth().onAuthStateChanged(async (user) => {
@@ -57,18 +56,29 @@ const Dashboard = (props) => {
           <Loader centered />
         )}
       </Card>
-      <Row>
-        <span>
-          Logged in with{' '}
-          <b>{get(firebase?.auth?.(), 'currentUser.email', '...')}</b>
-        </span>
-        <button onClick={signOut}>Sign Out</button>
-      </Row>
+      <ClientOnly>
+        <AuthMenu />
+      </ClientOnly>
     </>
   );
 };
 
 export default Dashboard;
+
+const AuthMenu = () => (
+  <Row>
+    <span>
+      Logged in with <b>{get(firebase.auth(), 'currentUser.email', '...')}</b>
+    </span>
+    <button onClick={signOut}>Sign Out</button>
+  </Row>
+);
+
+export const ClientOnly = ({ children }) => {
+  const [hasMounted, setHasMounted] = useState(false);
+  useEffect(() => setHasMounted(true), []);
+  return hasMounted ? children : null;
+};
 
 const getDeals = async (user) => {
   const db = firebase.firestore();
@@ -105,9 +115,7 @@ const authenticate = () => {
         }
       });
   } else {
-    if (!email) {
-      email = window.prompt('Please enter your email address');
-    }
+    email = window.prompt('Please enter your email address');
     sendFirebaseSignInEmail(email);
     alert('We sent you an email with a link to access the dashboard');
     navigate('/');
@@ -208,8 +216,7 @@ const StatusStepperContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  margin-top: 2rem;
-  margin-inline: 1rem;
+  margin: 2rem 1rem 1rem 1rem;
 `;
 const Step = styled.div`
   display: flex;

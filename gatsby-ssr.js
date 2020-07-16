@@ -4,6 +4,9 @@
  * See: https://www.gatsbyjs.org/docs/ssr-apis/
  */
 
+require("firebase/auth");
+require("firebase/firestore");
+
 const React = require("react");
 const safePrefix = require("./src/utils/safePrefix").default;
 
