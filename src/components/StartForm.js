@@ -24,8 +24,8 @@ const onSubmit = (values) => {
 const validationSchema = yup.object({
   email: yup
     .string()
-    .email('Invalid email format')
-    .required('Email is required'),
+    .email('Email inválido')
+    .required('Por favor inserir seu email'),
 });
 const StartForm = () => {
   const FormikBag = useFormik({
