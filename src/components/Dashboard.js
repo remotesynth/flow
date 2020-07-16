@@ -60,7 +60,7 @@ const Dashboard = (props) => {
       <Row>
         <span>
           Logged in with{' '}
-          <b>{get(firebase.auth(), 'currentUser.email', '...')}</b>
+          <b>{get(firebase?.auth?.(), 'currentUser.email', '...')}</b>
         </span>
         <button onClick={signOut}>Sign Out</button>
       </Row>
