@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
 import firebase from 'gatsby-plugin-firebase';
 import { Loader } from './OnboardingComponents/Loader';
@@ -5,6 +6,7 @@ import styled from 'styled-components';
 import get from 'lodash/get';
 import { formatCurrency } from './OnboardingComponents/ProjectValueInput';
 import { sendFirebaseSignInEmail } from './OnboardingComponents/onboarding.requests';
+import { navigate } from 'gatsby';
 
 const Dashboard = (props) => {
   const [deals, setDeals] = useState(null);
@@ -12,48 +14,57 @@ const Dashboard = (props) => {
   useEffect(
     () =>
       firebase.auth().onAuthStateChanged(async (user) => {
-        if (!user) {
+        if (!user && !deals) {
           user = await authenticate();
         }
         if (user) {
-          const deals = (await getDeals(user)) || [];
+          const deals = await getDeals(user);
           setDeals(deals);
+        } else {
+          setDeals([]);
         }
       }),
     []
   );
 
   return (
-    <Card>
-      <CardHeader>
-        {get(props, 'pageContext.frontmatter.header', '')}
-      </CardHeader>
-      {deals ? (
-        deals.map((deal) => (
-          <Deal key={deal.id}>
-            <DealHeader>
-              <DealName>{get(deal, 'deal_name', '')}</DealName>
-              <DealValue>
-                R$ {formatCurrency(get(deal, 'deal_value', ''))}
-              </DealValue>
-            </DealHeader>
-            <DealRow>
-              <CalendarIcon />
-              <span>{get(deal, 'create_date', '')}</span>
-            </DealRow>
-            <DealRow>
-              <DescriptionIcon />
-              <span>{get(deal, 'project_desc', '---')}</span>
-            </DealRow>
-            <DealStatus>
-              {getStatusLabel(get(deal, 'deal_stage', '---'))}
-            </DealStatus>
-          </Deal>
-        ))
-      ) : (
-        <Loader centered />
-      )}
-    </Card>
+    <>
+      <Card>
+        <CardHeader>
+          {get(props, 'pageContext.frontmatter.header', '')}
+        </CardHeader>
+        {deals ? (
+          deals.map((deal) => (
+            <Deal key={deal.id}>
+              <DealHeader>
+                <DealName>{get(deal, 'deal_name', '')}</DealName>
+                <DealValue>
+                  R$ {formatCurrency(get(deal, 'deal_value', ''))}
+                </DealValue>
+              </DealHeader>
+              <DealRow>
+                <CalendarIcon />
+                <span>{get(deal, 'create_date', '')}</span>
+              </DealRow>
+              <DealRow>
+                <DescriptionIcon />
+                <span>{get(deal, 'project_desc', '---')}</span>
+              </DealRow>
+              <DealStatus status={get(deal, 'deal_stage', '---')} />
+            </Deal>
+          ))
+        ) : (
+          <Loader centered />
+        )}
+      </Card>
+      <Row>
+        <span>
+          Logged in with{' '}
+          <b>{get(firebase.auth(), 'currentUser.email', '...')}</b>
+        </span>
+        <button onClick={signOut}>Sign Out</button>
+      </Row>
+    </>
   );
 };
 
@@ -63,7 +74,7 @@ const getDeals = async (user) => {
   const db = firebase.firestore();
   const snapshot = await db
     .collection('Deals')
-    .where('deal_email', '==', user.email)
+    .where('deal_email', '==', user?.email)
     .get();
   const deals = snapshot.docs.map((doc) => ({
     id: doc.id,
@@ -74,10 +85,10 @@ const getDeals = async (user) => {
 
 const authenticate = () => {
   let email = window.localStorage.getItem('emailForSignIn');
-  if (!email) {
-    email = window.prompt('Please provide your email for confirmation');
-  }
   if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
+    if (!email) {
+      email = window.prompt('Please provide your email for confirmation');
+    }
     return firebase
       .auth()
       .signInWithEmailLink(email, window.location.href)
@@ -93,7 +104,18 @@ const authenticate = () => {
           alert('We sent you an email with a link to access the dashboard');
         }
       });
+  } else {
+    if (!email) {
+      email = window.prompt('Please enter your email address');
+    }
+    sendFirebaseSignInEmail(email);
+    alert('We sent you an email with a link to access the dashboard');
+    navigate('/');
   }
+};
+const signOut = () => {
+  firebase.auth().signOut();
+  navigate('/');
 };
 
 const Card = styled.div`
@@ -101,7 +123,24 @@ const Card = styled.div`
   box-shadow: 0 2px 3px #ccc;
   border-radius: 5px;
   min-height: 100px;
+  margin-bottom: 2rem;
 `;
+const Row = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+  button {
+    white-space: nowrap;
+  }
+  span {
+    line-height: 1.2rem;
+    margin-bottom: 1rem;
+  }
+`;
+
 const CardHeader = styled.h3`
   padding: 15px 30px;
   box-sizing: border-box;
@@ -140,10 +179,78 @@ const DealRow = styled.p`
   display: flex;
   align-items: center;
 `;
-const DealStatus = styled.p`
-  margin-top: 20px;
-  margin-bottom: 0;
-  font-weight: 700;
+const DealStatus = ({ status }) => {
+  const entries = Object.entries(STATUSES);
+  return (
+    <StatusStepperContainer>
+      {entries.map(([key, label], index) => (
+        <React.Fragment key={key}>
+          <Step $step={key} $isCurrent={status == key}>
+            <StepIcon $isComplete={key < status} $isCurrent={status == key}>
+              {index + 1}
+            </StepIcon>
+            <StepName $isCurrent={status == key}>{label}</StepName>
+          </Step>
+          {index + 1 != entries.length && (
+            <StepTrail
+              $isBold={index < Object.keys(STATUSES).indexOf(status)}
+            />
+          )}
+        </React.Fragment>
+      ))}
+    </StatusStepperContainer>
+  );
+};
+DealStatus.propTypes = {
+  status: PropTypes.string.isRequired,
+};
+const StatusStepperContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-top: 2rem;
+  margin-inline: 1rem;
+`;
+const Step = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  flex-grow: 1;
+  max-width: 1.5rem;
+`;
+const StepName = styled.div`
+  line-height: 1;
+  text-align: center;
+  color: ${(props) => (props.$isCurrent ? 'black' : '#888')};
+  font-weight: ${(props) => (props.$isCurrent ? '700' : '400')};
+  @media (max-width: 768px) {
+    display: ${(props) => (props.$isCurrent ? 'block' : 'none')};
+  }
+`;
+const StepIcon = styled.div`
+  width: 1.6rem;
+  height: 1.6rem;
+  margin-bottom: 0.25rem;
+  display: grid;
+  place-items: center;
+  font-weight: ${(props) => (props.$isCurrent ? '700' : '400')};
+  cursor: ${(props) => (props.$isComplete ? 'pointer' : 'default')};
+  border: 1px solid #438945;
+  border-radius: 50%;
+  color: ${(props) => (props.$isCurrent ? 'white' : '#438945')};
+  background: ${(props) =>
+    props.$isCurrent ? 'linear-gradient(to right, #438945, #73bb75)' : 'none'};
+`;
+const StepTrail = styled.div`
+  margin-bottom: 6px;
+  border-radius: 2px;
+  background: #438945;
+  opacity: ${(props) => (props.$isBold ? 1 : 0.7)};
+  width: 8vw;
+  height: ${(props) => (props.$isBold ? '3px' : '1px')};
+  align-self: flex-start;
+  margin-top: 0.75rem;
+  flex-grow: 0;
 `;
 
 const Icon = styled.svg`
@@ -164,19 +271,10 @@ const DescriptionIcon = () => (
   </Icon>
 );
 
-function getStatusLabel(status) {
-  switch (status) {
-    case 'appointmentscheduled':
-      return 'Em análise';
-    case 'qualifiedtobuy':
-      return 'Crédito aprovado';
-    case 'contractsent':
-      return 'Contrato enviado';
-    case 'closedwon':
-      return 'Contrato assinado';
-    case 'closedlost':
-      return 'Solicitação cancelada';
-    default:
-      return status;
-  }
-}
+const STATUSES = {
+  appointmentscheduled: 'Em análise',
+  qualifiedtobuy: 'Crédito aprovado',
+  contractsent: 'Contrato enviado',
+  closedwon: 'Contrato assinado',
+  closedlost: 'Solicitação cancelada',
+};
