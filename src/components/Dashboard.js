@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import firebase from 'gatsby-plugin-firebase';
 import { Loader } from './OnboardingComponents/Loader';
 import styled from 'styled-components';
@@ -10,10 +10,12 @@ import { navigate } from 'gatsby';
 
 const Dashboard = (props) => {
   const [deals, setDeals] = useState(null);
-  useEffect(
-    () =>
-      firebase.auth().onAuthStateChanged(async (user) => {
-        if (!user && !deals) {
+  const unsubscribeAuth = useRef(null);
+  useEffect(() => {
+    unsubscribeAuth.current = firebase
+      .auth()
+      .onAuthStateChanged(async (user) => {
+        if (!user) {
           user = await authenticate();
         }
         if (user) {
@@ -22,9 +24,15 @@ const Dashboard = (props) => {
         } else {
           setDeals([]);
         }
-      }),
-    []
-  );
+      });
+    return unsubscribeAuth.current;
+  }, []);
+
+  const signOut = () => {
+    unsubscribeAuth.current();
+    firebase.auth().signOut();
+    navigate('/');
+  };
 
   return (
     <>
@@ -57,7 +65,7 @@ const Dashboard = (props) => {
         )}
       </Card>
       <ClientOnly>
-        <AuthMenu />
+        <AuthMenu signOut={signOut} />
       </ClientOnly>
     </>
   );
@@ -65,14 +73,18 @@ const Dashboard = (props) => {
 
 export default Dashboard;
 
-const AuthMenu = () => (
+const AuthMenu = (props) => (
   <Row>
     <span>
       Logged in with <b>{get(firebase.auth(), 'currentUser.email', '...')}</b>
     </span>
-    <button onClick={signOut}>Sign Out</button>
+    <button onClick={props.signOut}>Sign Out</button>
   </Row>
 );
+
+AuthMenu.propTypes = {
+  signOut: PropTypes.func.isRequired,
+};
 
 export const ClientOnly = ({ children }) => {
   const [hasMounted, setHasMounted] = useState(false);
@@ -112,6 +124,7 @@ const authenticate = () => {
           );
           await sendFirebaseSignInEmail(newEmail);
           alert('We sent you an email with a link to access the dashboard');
+          navigate('/');
         }
       });
   } else {
@@ -120,10 +133,6 @@ const authenticate = () => {
     alert('We sent you an email with a link to access the dashboard');
     navigate('/');
   }
-};
-const signOut = () => {
-  firebase.auth().signOut();
-  navigate('/');
 };
 
 const Card = styled.div`
