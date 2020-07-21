@@ -138,19 +138,19 @@ const OnboardingForm = (props) => {
       <Wizard step={props.step} setStep={props.setStep}>
         <Step fields={['firstName', 'lastName', 'phone', 'email']}>
           <InputGroup>
-            <Input name='firstName' label='First Name' />
-            <Input name='lastName' label='Last Name' />
+            <Input name='firstName' label='Nome' />
+            <Input name='lastName' label='Sobrenome' />
           </InputGroup>
-          <Input mask={phoneMask} name='phone' label='Phone' />
+          <Input mask={phoneMask} name='phone' label='Telefone' />
           <Input name='email' label='Email' disabled />
         </Step>
         <Step fields={['projectValue', 'projectDescription']}>
           <ProjectValueInput max={PROJECT_VALUE_MAX} />
           <Input
             name='projectDescription'
-            label='Description'
+            label='Descrição'
             component={Textarea}
-            placeholder='Project description'
+            placeholder='Nos conte mais sobre o seu projeto, quanto mais informações forem compartilhadas melhor poderemos lhe ajudar'
           />
         </Step>
         <Step fields={['cnpj']}>
@@ -175,31 +175,31 @@ OnboardingForm.propTypes = {
 const phoneRegex = RegExp(/^([(][1-9]{2}[)] )?[0-9]{4,5}[-]?[0-9]{4}$/);
 
 const validationSchema = yup.object({
-  firstName: yup.string().required('First name is required'),
-  lastName: yup.string().required('Last name is required'),
+  firstName: yup.string().required('Nome é um campo obrigatório'),
+  lastName: yup.string().required('Sobrenome é um campo obrigatório'),
   phone: yup
     .string()
-    .required('Phone is required')
-    .matches(phoneRegex, 'Invalid phone format'),
+    .required('Telefone é um campo obrigatório')
+    .matches(phoneRegex, 'Telefone inválido'),
   email: yup
     .string()
     .email('Invalid email format')
-    .required('Email is required'),
+    .required('Email é um campo obrigatório'),
   projectValue: yup
     .string()
     .test(
       'is positive',
-      'Enter Project Value',
+      'Por favor informar o custo aproximado do projeto',
       (val) => +stripCurrency(val) >= 1
     ),
-  projectDescription: yup.string().required('Project Description is required'),
+  projectDescription: yup.string().required('Descrição do projeto é um campo obrigatório'),
   cnpj: yup.string().test('company exists', 'Insira o CNPJ', function () {
     return this.parent.company;
   }),
   company: yup.object(),
   terms: yup
     .boolean()
-    .oneOf([true], 'The Terms and Conditions must be accepted'),
+    .oneOf([true], 'Os Termos e Condições devem ser aceitos antes de Enviar'),
 });
 
 export default OnboardingForm;

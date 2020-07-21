@@ -5,6 +5,7 @@ import upperFirst from 'lodash/upperFirst';
 import camelCase from 'lodash/camelCase';
 import { graphql } from 'gatsby';
 import styled from 'styled-components';
+import logo from '../../static/images/logo-final.svg'
 
 import components, { Layout } from '../components/index';
 
@@ -25,6 +26,9 @@ const Standalone = (props) => {
   const Component = components[component];
   return (
     <Layout showHeader={false} showFooter={false} {...props}>
+      <OnBoardHeader> 
+         <Logo src={logo} alt="Logo" />
+      </OnBoardHeader>
       <ContainerForm>
           <Component {...props} />
       </ContainerForm>
@@ -47,5 +51,15 @@ const ContainerForm = styled.div`
         width: 100%;
         margin: 0;
       }
+`;
 
+const OnBoardHeader = styled.div`
+    margin: 25px;
+`; 
+
+const Logo = styled.img`
+  width: 110px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
 `;

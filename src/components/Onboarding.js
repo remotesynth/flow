@@ -7,10 +7,10 @@ import { navigate } from 'gatsby';
 import Stepper from './OnboardingComponents/Stepper';
 
 const STEPS = {
-  1: 'About You',
-  2: 'About the Project',
-  3: 'Company ID',
-  4: 'Review',
+  1: 'Sobre Você',
+  2: 'Sobre o Projeto',
+  3: 'CNPJ da Empresa',
+  4: 'Revisar e Enviar',
 };
 const Onboarding = (props) => {
   const [step, setStep] = useState(1);
@@ -28,7 +28,6 @@ const Onboarding = (props) => {
         <Stepper current={step} setStep={setStep} steps={STEPS} />
       </StepperContainer>
       <FormContainer>
-        <Logo src={pageContext.frontmatter?.meta?.logo} />
         <StepTitle>{STEPS[step]}</StepTitle>
         <OnboardingForm
           step={step}
@@ -113,6 +112,7 @@ const Title = styled.h2`
 const StepTitle = styled.h3`
   font-size: 1.2rem;
   margin: 30px 0 50px 0;
+  margin-top: 40px !important;
 `;
 const Logo = styled.img`
   width: 110px;

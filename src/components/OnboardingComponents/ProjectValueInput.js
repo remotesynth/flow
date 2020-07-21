@@ -50,7 +50,7 @@ const ProjectValueInput = ({ max }) => {
   const numValue = Number(stripCurrency(value));
   return (
     <Container>
-      <Label>Value of the Project</Label>
+      <Label>Custo Aproximado</Label>
 
       <InputField
         mask={currencyMask}

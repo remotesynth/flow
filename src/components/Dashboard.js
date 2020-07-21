@@ -37,9 +37,6 @@ const Dashboard = (props) => {
   return (
     <>
       <Card>
-        <CardHeader>
-          {get(props, 'pageContext.frontmatter.header', '')}
-        </CardHeader>
         {deals ? (
           deals.map((deal) => (
             <Deal key={deal.id}>
@@ -226,6 +223,7 @@ const StatusStepperContainer = styled.div`
   justify-content: space-between;
   align-items: baseline;
   margin: 2rem 1rem 1rem 1rem;
+  min
 `;
 const Step = styled.div`
   display: flex;
