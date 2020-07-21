@@ -19,9 +19,9 @@ export default class SectionFeaturesDetailed extends React.Component {
                 </p>
                 )}
               </div>
-              {_.get(section, 'features_icon', null) && (
+              {_.get(section, 'features', null) && (
               <div className="inner">
-                {_.map(_.get(section, 'features_icon', null), (feature, feature_idx) => (
+                {_.map(_.get(section, 'features', null), (feature, feature_idx) => (
                 <div key={feature_idx} className="block-item">
                   <div className="grid">
                     {_.get(feature, 'image', null) && (

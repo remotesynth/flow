@@ -58,7 +58,8 @@ export default {
             "validation": Rule => Rule.required(),
             "options": {
                 "list": [
-                    "section_features"
+                    "section_features",
+                    "section_features_icon"
                 ]
             }
         },
