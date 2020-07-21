@@ -76,9 +76,9 @@ export default Dashboard;
 const AuthMenu = (props) => (
   <Row>
     <span>
-      Logged in with <b>{get(firebase.auth(), 'currentUser.email', '...')}</b>
+      Email cadastrado: <b>{get(firebase.auth(), 'currentUser.email', '...')}</b>
     </span>
-    <button onClick={props.signOut}>Sign Out</button>
+    <button onClick={props.signOut}>Sair</button>
   </Row>
 );
 
@@ -109,7 +109,7 @@ const authenticate = () => {
   let email = window.localStorage.getItem('emailForSignIn');
   if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
     if (!email) {
-      email = window.prompt('Please provide your email for confirmation');
+      email = window.prompt('Por favor informe seu email para confirmação');
     }
     return firebase
       .auth()
@@ -119,18 +119,18 @@ const authenticate = () => {
         if (error.code === 'auth/invalid-action-code') {
           window.localStorage.removeItem('emailForSignIn');
           const newEmail = window.prompt(
-            'Sign in link expired, please enter your email to receive a new one',
+            'Link de acesso expirou para sua segurança. Por favor informe seu email para receber um novo link',
             email
           );
           await sendFirebaseSignInEmail(newEmail);
-          alert('We sent you an email with a link to access the dashboard');
+          alert('Enviamos um email com um link direto para acessar o seu Dashboard');
           navigate('/');
         }
       });
   } else {
-    email = window.prompt('Please enter your email address');
+    email = window.prompt('Por favor informe seu email');
     sendFirebaseSignInEmail(email);
-    alert('We sent you an email with a link to access the dashboard');
+    alert('Enviamos um email com um link direto para acessar o seu Dashboard');
     navigate('/');
   }
 };
@@ -291,6 +291,6 @@ const STATUSES = {
   appointmentscheduled: 'Em análise',
   qualifiedtobuy: 'Crédito aprovado',
   contractsent: 'Contrato enviado',
-  closedwon: 'Contrato assinado',
-  closedlost: 'Solicitação cancelada',
+  closedwon: 'Contrato assinado'
+ // closedlost: 'Solicitação cancelada'
 };
