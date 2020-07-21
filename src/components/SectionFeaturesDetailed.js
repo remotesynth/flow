@@ -23,7 +23,7 @@ export default class SectionFeaturesDetailed extends React.Component {
               <div className="inner">
                 {_.map(_.get(section, 'features', null), (feature, feature_idx) => (
                 <div key={feature_idx} className="block-item">
-                  <div className="grid">
+                  <div className="grid mb-4">
                     {_.get(feature, 'image', null) && (
                     <div className="cell block-preview">
                       <img className="iconFeature" src={safePrefix(_.get(feature, 'image', null))} alt={_.get(feature, 'title', null)} />

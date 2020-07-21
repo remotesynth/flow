@@ -397,7 +397,7 @@ img {
 /* Icons Features */
 .iconFeature {
   height: auto;
-  max-width: 40%;
+  max-width: 30%;
 }
 
 .post-thumbnail img,
@@ -439,4 +439,8 @@ img {
 .post-content:after {
   content: "";
   display: table;
+}
+
+.mb-4 {
+  margin-bottom: 4rem !important;
 }
