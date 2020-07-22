@@ -20,6 +20,11 @@ const Dashboard = (props) => {
         }
         if (user) {
           const deals = await getDeals(user);
+          if(deals.length<1){
+            document.getElementById('deal-msg').style.display = 'block';
+          }else{
+            document.getElementById('deal-msg').style.display = 'none';
+          }
           setDeals(deals);
         } else {
           setDeals([]);
@@ -34,9 +39,11 @@ const Dashboard = (props) => {
     navigate('/');
   };
 
+
   return (
     <>
       <Card>
+        <div id="deal-msg" style={{display: 'none'}}> Por favor aguarde um momento, estamos processando as informações enviadas </div>
         {deals ? (
           deals.map((deal) => (
             <Deal key={deal.id}>
@@ -48,7 +55,7 @@ const Dashboard = (props) => {
               </DealHeader>
               <DealRow>
                 <CalendarIcon />
-                <span>{get(deal, 'create_date', '')}</span>
+                <span>{get(deal, 'update_date_i18n.pt', '')}</span>
               </DealRow>
               <DealRow>
                 <DescriptionIcon />
