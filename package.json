@@ -23,6 +23,7 @@
     "gatsby-plugin-sitemap": "^2.4.7",
     "gatsby-source-filesystem": "2.3.10",
     "gatsby-transformer-remark": "2.8.14",
+    "gatsby-plugin-google-analytics": "^2.3.6",
     "js-yaml": "^3.12.2",
     "lodash": "^4.17.11",
     "marked": "^0.6.1",
