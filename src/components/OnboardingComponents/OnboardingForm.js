@@ -75,7 +75,7 @@ const PROJECT_VALUE_MAX = 2000000;
 
 const onSubmit = async (values) => {
   const zapPromise = sendDataToZapier(values);
-  const firebasePromise = sendFirebaseSignInEmail(values.email);
+  const firebasePromise = sendFirebaseSignInEmail(values.email, values.firstName, values.lastName, values.phone);
   await Promise.all([zapPromise, firebasePromise]);
   navigate('/thank-you');
 };
@@ -123,6 +123,7 @@ const OnboardingForm = (props) => {
       firstName: '',
       lastName: '',
       phone: '',
+      partner: '',
       email: props.initialValues.email || '',
       projectValue: '0',
       projectDescription: '',
@@ -142,7 +143,8 @@ const OnboardingForm = (props) => {
             <Input name='lastName' label='Sobrenome' />
           </InputGroup>
           <Input mask={phoneMask} name='phone' label='Telefone' />
-          <Input name='email' label='Email' disabled />
+
+        <Input name='email' label='Email' disabled />
         </Step>
         <Step fields={['projectValue', 'projectDescription']}>
           <ProjectValueInput max={PROJECT_VALUE_MAX} />
@@ -198,6 +200,9 @@ const validationSchema = yup.object({
   }),
   company: yup.object(),
   terms: yup
+    .boolean()
+    .oneOf([true], 'Os Termos e Condições devem ser aceitos antes de Enviar'),
+  partner: yup
     .boolean()
     .oneOf([true], 'Os Termos e Condições devem ser aceitos antes de Enviar'),
 });

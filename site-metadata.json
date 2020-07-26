@@ -22,12 +22,6 @@
                 "label": "Blog",
                 "type": "action",
                 "url": "blog"
-            },
-            {
-                "label": "Acessar",
-                "primary": true,
-                "type": "action",
-                "url": "/"
             }
         ],
         "title": "Flow",

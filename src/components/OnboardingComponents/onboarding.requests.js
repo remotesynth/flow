@@ -47,7 +47,11 @@ export const sendFirebaseSignInEmail = (email) => {
     .auth()
     .sendSignInLinkToEmail(email, actionCodeSettings)
     .then(function () {
+      console.log('usr data == ', firstName, lastName, phone);
       window.localStorage.setItem('emailForSignIn', email);
+      // window.localStorage.setItem('usrfirstName', firstName);
+      // window.localStorage.setItem('usrlastName', lastName);
+      // window.localStorage.setItem('usrPhone', phone);
     })
     .catch(function (error) {
       console.error(error);

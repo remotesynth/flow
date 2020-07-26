@@ -111,6 +111,28 @@ const getDeals = async (user) => {
 
 const authenticate = () => {
   let email = window.localStorage.getItem('emailForSignIn');
+  // let usrFirstName = window.localStorage.getItem('usrfirstName');
+  // let usrLastName = window.localStorage.getItem('usrlastName');
+  // let usrPhone = window.localStorage.getItem('usrPhone');
+  // console.log('usr data == ', usrFirstName, usrLastName, usrPhone);
+
+  firebase.auth().fetchSignInMethodsForEmail(email).then((signInMethods) => {
+    if (signInMethods.length === 0) {
+      // New user
+
+      console.log('NEW USER!!')
+
+
+    } else {
+      // Existing user
+
+      console.log('NEW USER!!')
+
+
+    }
+  });
+
+
   if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
     if (!email) {
       email = window.prompt('Por favor informe seu email para confirmação');
@@ -118,7 +140,7 @@ const authenticate = () => {
     return firebase
       .auth()
       .signInWithEmailLink(email, window.location.href)
-      .then((resp) => resp.user)
+      .then((resp) => resp.user )
       .catch(async (error) => {
         if (error.code === 'auth/invalid-action-code') {
           window.localStorage.removeItem('emailForSignIn');
