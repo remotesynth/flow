@@ -6,6 +6,7 @@ export const sendDataToZapier = async (values) => {
   formData.append('email', values.email);
   formData.append('firstName', values.firstName);
   formData.append('lastName', values.lastName);
+  formData.append('userType', values.userType);
   formData.append('phone', values.phone);
   formData.append('projectValue', stripCurrency(values.projectValue));
   formData.append('projectDescription', values.projectDescription);

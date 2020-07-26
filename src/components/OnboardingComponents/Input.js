@@ -3,6 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 import MaskedInput from 'react-text-mask';
 import { useForm } from './OnboardingForm';
+import capitalize from 'lodash/capitalize';
 
 const Input = (props) => {
   const {
@@ -47,7 +48,7 @@ const Input = (props) => {
 export default Input;
 
 const Container = styled.div`
-  padding: ${(props) => `${props.$paddingY}px ${props.$paddingX}px`};
+  padding: ${(props) => `${props.$paddingY || 0}px ${props.$paddingX || 0}px`};
   margin-bottom: 10px;
   width: 100%;
   box-sizing: border-box;
@@ -111,4 +112,43 @@ Input.defaultProps = {
   paddingX: 15,
   paddingY: 15,
   noLabel: false,
+  type: 'text',
+};
+
+export const RadioInput = (props) => {
+  const { label, name, disabled, paddingX, paddingY, noLabel, options } = props;
+  const { values, errors, touched, setFieldValue } = useForm();
+  console.log('values: ', values);
+  return (
+    <Container $paddingX={paddingX} $paddingY={paddingY}>
+      {!noLabel && <Label>{label}</Label>}
+      {options.map((option) => (
+        <div key={option}>
+          <input
+            name={name}
+            onClick={() => setFieldValue(name, option)}
+            value={props.value || values[name]}
+            disabled={disabled}
+            type='radio'
+            id={`radio-${name}-${option}`}
+          />
+          <Label for={`radio-${name}-${option}`}>{capitalize(option)}</Label>
+        </div>
+      ))}
+      {!!(touched[name] && errors[name]) && (
+        <ErrorLabel>{errors[name]}</ErrorLabel>
+      )}
+    </Container>
+  );
+};
+RadioInput.propTypes = {
+  disabled: PropTypes.bool,
+  label: PropTypes.string,
+  name: PropTypes.string,
+  noLabel: PropTypes.bool,
+  onChange: PropTypes.func,
+  options: PropTypes.arrayOf(PropTypes.string).isRequired,
+  paddingX: PropTypes.number,
+  paddingY: PropTypes.number,
+  value: PropTypes.string,
 };

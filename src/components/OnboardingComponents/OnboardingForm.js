@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { useFormik } from 'formik';
-import Input from './Input';
+import Input, { RadioInput } from './Input';
 import * as yup from 'yup';
 import ProjectValueInput, { stripCurrency } from './ProjectValueInput';
 import CnpjInput from './CnpjInput';
@@ -136,11 +136,12 @@ const OnboardingForm = (props) => {
   return (
     <FormContext.Provider value={FormikBag}>
       <Wizard step={props.step} setStep={props.setStep}>
-        <Step fields={['firstName', 'lastName', 'phone', 'email']}>
+        <Step fields={['firstName', 'lastName', 'userType', 'phone', 'email']}>
           <InputGroup>
             <Input name='firstName' label='Nome' />
             <Input name='lastName' label='Sobrenome' />
           </InputGroup>
+          <RadioInput paddingX={15} label="User Type" name="userType" options={Object.values(USER_TYPES)}/>
           <Input mask={phoneMask} name='phone' label='Telefone' />
           <Input name='email' label='Email' disabled />
         </Step>
@@ -172,11 +173,20 @@ OnboardingForm.propTypes = {
   step: PropTypes.number,
 };
 
+const USER_TYPES = {
+  VENDOR: 'vendor',
+  CUSTOMER: 'customer',
+};
+
 const phoneRegex = RegExp(/^([(][1-9]{2}[)] )?[0-9]{4,5}[-]?[0-9]{4}$/);
 
 const validationSchema = yup.object({
   firstName: yup.string().required('Nome é um campo obrigatório'),
   lastName: yup.string().required('Sobrenome é um campo obrigatório'),
+  userType: yup
+    .string()
+    .oneOf(Object.values(USER_TYPES))
+    .required('Select a User Type'),
   phone: yup
     .string()
     .required('Telefone é um campo obrigatório')
@@ -192,7 +202,9 @@ const validationSchema = yup.object({
       'Por favor informar o custo aproximado do projeto',
       (val) => +stripCurrency(val) >= 1
     ),
-  projectDescription: yup.string().required('Descrição do projeto é um campo obrigatório'),
+  projectDescription: yup
+    .string()
+    .required('Descrição do projeto é um campo obrigatório'),
   cnpj: yup.string().test('company exists', 'Insira o CNPJ', function () {
     return this.parent.company;
   }),

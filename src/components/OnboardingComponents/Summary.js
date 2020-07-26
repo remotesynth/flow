@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useForm } from './OnboardingForm';
 import { ErrorLabel } from './Input';
+import capitalize from 'lodash/capitalize';
 
 const Summary = () => {
   const { values, errors, touched, setFieldValue } = useForm();
@@ -16,6 +17,7 @@ const Summary = () => {
             <Name>
               {values.firstName} {values.lastName}
             </Name>
+            <Secondary>{capitalize(values.userType)}</Secondary>
             <Secondary>{values.email}</Secondary>
             <Secondary>{values.phone}</Secondary>
           </Block>
