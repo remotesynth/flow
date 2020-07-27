@@ -1,5 +1,6 @@
 import { stripCurrency } from './ProjectValueInput';
 import firebase from 'gatsby-plugin-firebase';
+import { nanoid } from 'nanoid';
 
 export const sendDataToZapier = async (values) => {
   const formData = new FormData();
@@ -54,3 +55,5 @@ export const sendFirebaseSignInEmail = (email) => {
       console.error(error);
     });
 };
+export const createUser = (email) =>
+  firebase.auth().createUserWithEmailAndPassword(email, nanoid());

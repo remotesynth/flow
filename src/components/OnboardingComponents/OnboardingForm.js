@@ -8,10 +8,7 @@ import ProjectValueInput, { stripCurrency } from './ProjectValueInput';
 import CnpjInput from './CnpjInput';
 import Summary from './Summary';
 import { navigate } from 'gatsby';
-import {
-  sendDataToZapier,
-  sendFirebaseSignInEmail,
-} from './onboarding.requests';
+import { sendDataToZapier, createUser } from './onboarding.requests';
 
 const Wizard = ({ step, setStep, children }) => {
   const { validateForm, setFieldTouched, submitForm, isSubmitting } = useForm();
@@ -75,7 +72,7 @@ const PROJECT_VALUE_MAX = 2000000;
 
 const onSubmit = async (values) => {
   const zapPromise = sendDataToZapier(values);
-  const firebasePromise = sendFirebaseSignInEmail(values.email);
+  const firebasePromise = createUser(values.email).catch(() => {});
   await Promise.all([zapPromise, firebasePromise]);
   navigate('/thank-you');
 };
@@ -141,7 +138,12 @@ const OnboardingForm = (props) => {
             <Input name='firstName' label='Nome' />
             <Input name='lastName' label='Sobrenome' />
           </InputGroup>
-          <RadioInput paddingX={15} label="User Type" name="userType" options={Object.values(USER_TYPES)}/>
+          <RadioInput
+            paddingX={15}
+            label='User Type'
+            name='userType'
+            options={Object.values(USER_TYPES)}
+          />
           <Input mask={phoneMask} name='phone' label='Telefone' />
           <Input name='email' label='Email' disabled />
         </Step>

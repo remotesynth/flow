@@ -112,6 +112,7 @@ const Header = (props) => {
                           </li>
                         )
                       )}
+                      {props.children}
                     </ul>
                   </div>
                 </nav>
