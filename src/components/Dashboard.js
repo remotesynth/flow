@@ -7,28 +7,41 @@ import get from 'lodash/get';
 import { formatCurrency } from './OnboardingComponents/ProjectValueInput';
 import { sendFirebaseSignInEmail } from './OnboardingComponents/onboarding.requests';
 import { navigate } from 'gatsby';
+import EmailModal from './EmailModal';
 
-const Dashboard = (props) => {
+const onEmailSent = () => {
+  alert('Enviamos um email com um link direto para acessar o seu Dashboard');
+  navigate('/');
+};
+const Dashboard = () => {
   const [deals, setDeals] = useState(null);
   const unsubscribeAuth = useRef(null);
+  const [showLoginModal, setShowLoginModal] = useState(false);
+
   useEffect(() => {
     unsubscribeAuth.current = firebase
       .auth()
       .onAuthStateChanged(async (user) => {
         if (!user) {
-          user = await authenticate();
-        }
-        if (user) {
-          const deals = await getDeals(user);
-          if(deals.length<1){
-            document.getElementById('deal-msg').style.display = 'block';
-          }else{
-            document.getElementById('deal-msg').style.display = 'none';
+          const queryEmail = new URLSearchParams(window.location.search)?.get(
+            'email'
+          )?.replace(' ', '+');
+          if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
+            return authenticate();
+          } else if (queryEmail) {
+            await sendFirebaseSignInEmail(queryEmail);
+            return onEmailSent();
+          } else {
+            return setShowLoginModal(true);
           }
-          setDeals(deals);
-        } else {
-          setDeals([]);
         }
+        const deals = await getDeals(user);
+        if (deals.length < 1) {
+          document.getElementById('deal-msg').style.display = 'block';
+        } else {
+          document.getElementById('deal-msg').style.display = 'none';
+        }
+        setDeals(deals);
       });
     return unsubscribeAuth.current;
   }, []);
@@ -39,11 +52,23 @@ const Dashboard = (props) => {
     navigate('/');
   };
 
-
   return (
     <>
+      {showLoginModal && (
+        <EmailModal
+          onSubmit={async (email) => {
+            await sendFirebaseSignInEmail(email);
+            setShowLoginModal(false);
+            onEmailSent();
+          }}
+          noClose
+        />
+      )}
       <Card>
-        <div id="deal-msg" style={{display: 'none'}}> Por favor aguarde um momento, estamos processando as informações enviadas </div>
+        <div id='deal-msg' style={{ display: 'none' }}>
+          Por favor aguarde um momento, estamos processando as informações
+          enviadas
+        </div>
         {deals ? (
           deals.map((deal) => (
             <Deal key={deal.id}>
@@ -80,7 +105,8 @@ export default Dashboard;
 const AuthMenu = (props) => (
   <Row>
     <span>
-      Email cadastrado: <b>{get(firebase.auth(), 'currentUser.email', '...')}</b>
+      Email cadastrado:{' '}
+      <b>{get(firebase.auth(), 'currentUser.email', '...')}</b>
     </span>
     <button onClick={props.signOut}>Sair</button>
   </Row>
@@ -111,54 +137,27 @@ const getDeals = async (user) => {
 
 const authenticate = () => {
   let email = window.localStorage.getItem('emailForSignIn');
-  // let usrFirstName = window.localStorage.getItem('usrfirstName');
-  // let usrLastName = window.localStorage.getItem('usrlastName');
-  // let usrPhone = window.localStorage.getItem('usrPhone');
-  // console.log('usr data == ', usrFirstName, usrLastName, usrPhone);
-
-  firebase.auth().fetchSignInMethodsForEmail(email).then((signInMethods) => {
-    if (signInMethods.length === 0) {
-      // New user
-
-      console.log('NEW USER!!')
-
-
-    } else {
-      // Existing user
-
-      console.log('NEW USER!!')
-
-
-    }
-  });
-
-
-  if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
-    if (!email) {
-      email = window.prompt('Por favor informe seu email para confirmação');
-    }
-    return firebase
-      .auth()
-      .signInWithEmailLink(email, window.location.href)
-      .then((resp) => resp.user )
-      .catch(async (error) => {
-        if (error.code === 'auth/invalid-action-code') {
-          window.localStorage.removeItem('emailForSignIn');
-          const newEmail = window.prompt(
-            'Link de acesso expirou para sua segurança. Por favor informe seu email para receber um novo link',
-            email
-          );
-          await sendFirebaseSignInEmail(newEmail);
-          alert('Enviamos um email com um link direto para acessar o seu Dashboard');
-          navigate('/');
-        }
-      });
-  } else {
-    email = window.prompt('Por favor informe seu email');
-    sendFirebaseSignInEmail(email);
-    alert('Enviamos um email com um link direto para acessar o seu Dashboard');
-    navigate('/');
+  if (!email) {
+    email = window.prompt('Por favor informe seu email para confirmação');
   }
+  return firebase
+    .auth()
+    .signInWithEmailLink(email, window.location.href)
+    .then((resp) => resp.user)
+    .catch(async (error) => {
+      if (error.code === 'auth/invalid-action-code') {
+        window.localStorage.removeItem('emailForSignIn');
+        const newEmail = window.prompt(
+          'Link de acesso expirou para sua segurança. Por favor informe seu email para receber um novo link',
+          email
+        );
+        await sendFirebaseSignInEmail(newEmail);
+        alert(
+          'Enviamos um email com um link direto para acessar o seu Dashboard'
+        );
+        navigate('/');
+      }
+    });
 };
 
 const Card = styled.div`
@@ -182,16 +181,6 @@ const Row = styled.div`
     line-height: 1.2rem;
     margin-bottom: 1rem;
   }
-`;
-
-const CardHeader = styled.h3`
-  padding: 15px 30px;
-  box-sizing: border-box;
-  margin: 0;
-  font-weight: 400;
-  font-size: 1.2rem;
-  color: #666;
-  width: 100%;
 `;
 const Deal = styled.div`
   padding: 20px 30px;
@@ -252,7 +241,6 @@ const StatusStepperContainer = styled.div`
   justify-content: space-between;
   align-items: baseline;
   margin: 2rem 1rem 1rem 1rem;
-  min
 `;
 const Step = styled.div`
   display: flex;
@@ -318,6 +306,6 @@ const STATUSES = {
   appointmentscheduled: 'Em análise',
   qualifiedtobuy: 'Crédito aprovado',
   contractsent: 'Contrato enviado',
-  closedwon: 'Contrato assinado'
- // closedlost: 'Solicitação cancelada'
+  closedwon: 'Contrato assinado',
+  // closedlost: 'Solicitação cancelada'
 };

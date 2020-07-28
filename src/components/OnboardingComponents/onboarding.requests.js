@@ -1,11 +1,14 @@
 import { stripCurrency } from './ProjectValueInput';
 import firebase from 'gatsby-plugin-firebase';
+import { nanoid } from 'nanoid';
 
-export const sendDataToZapier = async (values) => {
+export const sendDataToZapier = async (values, firebaseUid) => {
   const formData = new FormData();
+  formData.append('firebaseUid', firebaseUid);
   formData.append('email', values.email);
   formData.append('firstName', values.firstName);
   formData.append('lastName', values.lastName);
+  formData.append('userType', values.userType);
   formData.append('phone', values.phone);
   formData.append('projectValue', stripCurrency(values.projectValue));
   formData.append('projectDescription', values.projectDescription);
@@ -36,6 +39,11 @@ export const sendDataToZapier = async (values) => {
   console.log('Zapier hook response: ', data);
   return data;
 };
+
+/**
+ *
+ * @param {string} email
+ */
 export const sendFirebaseSignInEmail = (email) => {
   const actionCodeSettings = {
     // URL you want to redirect back to
@@ -47,7 +55,7 @@ export const sendFirebaseSignInEmail = (email) => {
     .auth()
     .sendSignInLinkToEmail(email, actionCodeSettings)
     .then(function () {
-      console.log('usr data == ', firstName, lastName, phone);
+      // console.log('usr data == ', firstName, lastName, phone);
       window.localStorage.setItem('emailForSignIn', email);
       // window.localStorage.setItem('usrfirstName', firstName);
       // window.localStorage.setItem('usrlastName', lastName);
@@ -56,4 +64,22 @@ export const sendFirebaseSignInEmail = (email) => {
     .catch(function (error) {
       console.error(error);
     });
+};
+window.firebase = firebase;
+/**
+ * @param {string} email
+ * @param {*} values
+ */
+export const createUser = async (email, values) => {
+  const userSnapshot = await firebase
+    .auth()
+    .createUserWithEmailAndPassword(email, nanoid());
+  const db = firebase.firestore();
+  await db.collection('Users').doc(userSnapshot.user.uid).set({
+    firstName: values.firstName,
+    lastName: values.lastName,
+    email: values.email,
+    phone: values.phone,
+  });
+  return userSnapshot;
 };

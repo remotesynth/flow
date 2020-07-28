@@ -2,16 +2,14 @@ import PropTypes from 'prop-types';
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { useFormik } from 'formik';
-import Input from './Input';
+import Input, { RadioInput } from './Input';
 import * as yup from 'yup';
 import ProjectValueInput, { stripCurrency } from './ProjectValueInput';
 import CnpjInput from './CnpjInput';
 import Summary from './Summary';
 import { navigate } from 'gatsby';
-import {
-  sendDataToZapier,
-  sendFirebaseSignInEmail,
-} from './onboarding.requests';
+import { sendDataToZapier, createUser } from './onboarding.requests';
+import firebase from 'gatsby-plugin-firebase';
 
 const Wizard = ({ step, setStep, children }) => {
   const { validateForm, setFieldTouched, submitForm, isSubmitting } = useForm();
@@ -74,9 +72,9 @@ export const useForm = () => useContext(FormContext);
 const PROJECT_VALUE_MAX = 2000000;
 
 const onSubmit = async (values) => {
-  const zapPromise = sendDataToZapier(values);
-  const firebasePromise = sendFirebaseSignInEmail(values.email, values.firstName, values.lastName, values.phone);
-  await Promise.all([zapPromise, firebasePromise]);
+  const userSnapshot = await createUser(values.email, values).catch(() => {});
+  await sendDataToZapier(values, userSnapshot?.user?.uid);
+  await firebase.auth().signOut();
   navigate('/thank-you');
 };
 const phoneMask = (val) => {
@@ -137,11 +135,17 @@ const OnboardingForm = (props) => {
   return (
     <FormContext.Provider value={FormikBag}>
       <Wizard step={props.step} setStep={props.setStep}>
-        <Step fields={['firstName', 'lastName', 'phone', 'email']}>
+        <Step fields={['firstName', 'lastName', 'userType', 'phone', 'email']}>
           <InputGroup>
             <Input name='firstName' label='Nome' />
             <Input name='lastName' label='Sobrenome' />
           </InputGroup>
+          <RadioInput
+            paddingX={15}
+            label='User Type'
+            name='userType'
+            options={Object.values(USER_TYPES)}
+          />
           <Input mask={phoneMask} name='phone' label='Telefone' />
 
         <Input name='email' label='Email' disabled />
@@ -174,11 +178,20 @@ OnboardingForm.propTypes = {
   step: PropTypes.number,
 };
 
+const USER_TYPES = {
+  VENDOR: 'vendor',
+  CUSTOMER: 'customer',
+};
+
 const phoneRegex = RegExp(/^([(][1-9]{2}[)] )?[0-9]{4,5}[-]?[0-9]{4}$/);
 
 const validationSchema = yup.object({
   firstName: yup.string().required('Nome é um campo obrigatório'),
   lastName: yup.string().required('Sobrenome é um campo obrigatório'),
+  userType: yup
+    .string()
+    .oneOf(Object.values(USER_TYPES))
+    .required('Select a User Type'),
   phone: yup
     .string()
     .required('Telefone é um campo obrigatório')
@@ -194,7 +207,9 @@ const validationSchema = yup.object({
       'Por favor informar o custo aproximado do projeto',
       (val) => +stripCurrency(val) >= 1
     ),
-  projectDescription: yup.string().required('Descrição do projeto é um campo obrigatório'),
+  projectDescription: yup
+    .string()
+    .required('Descrição do projeto é um campo obrigatório'),
   cnpj: yup.string().test('company exists', 'Insira o CNPJ', function () {
     return this.parent.company;
   }),
