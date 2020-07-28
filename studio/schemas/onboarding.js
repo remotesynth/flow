@@ -64,7 +64,6 @@ export default {
       type: 'string',
       name: 'component',
       options: { list: [{ title: 'Onboarding', value: 'onboarding' }] },
-      readOnly: true,
     },
     {
       type: 'object',
@@ -78,7 +77,6 @@ export default {
       ],
     },
   ],
-  singleInstance: true,
   preview: {
     select: {
       title: 'title',

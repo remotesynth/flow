@@ -23,9 +23,9 @@ const Dashboard = () => {
       .auth()
       .onAuthStateChanged(async (user) => {
         if (!user) {
-          const queryEmail = new URLSearchParams(window.location.search)?.get(
-            'email'
-          )?.replace(' ', '+');
+          const queryEmail = new URLSearchParams(window.location.search)
+            ?.get('email')
+            ?.replace(' ', '+');
           if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
             return authenticate();
           } else if (queryEmail) {
@@ -51,7 +51,13 @@ const Dashboard = () => {
     firebase.auth().signOut();
     navigate('/');
   };
-
+  const handleNewProject = () => {
+    navigate('/new_project', {
+      state: {
+        autofillUser: true,
+      },
+    });
+  };
   return (
     <>
       {showLoginModal && (
@@ -64,6 +70,9 @@ const Dashboard = () => {
           noClose
         />
       )}
+      <NewProjectButton onClick={handleNewProject}>
+        Submit New Project
+      </NewProjectButton>
       <Card>
         <div id='deal-msg' style={{ display: 'none' }}>
           Por favor aguarde um momento, estamos processando as informações
@@ -159,7 +168,9 @@ const authenticate = () => {
       }
     });
 };
-
+const NewProjectButton = styled.button`
+  margin-bottom: 1rem;
+`;
 const Card = styled.div`
   background: white;
   box-shadow: 0 2px 3px #ccc;
