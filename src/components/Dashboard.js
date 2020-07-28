@@ -26,7 +26,6 @@ const Dashboard = () => {
           const queryEmail = new URLSearchParams(window.location.search)?.get(
             'email'
           )?.replace(' ', '+');
-          console.log('queryEmail: ', queryEmail);
           if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
             return authenticate();
           } else if (queryEmail) {

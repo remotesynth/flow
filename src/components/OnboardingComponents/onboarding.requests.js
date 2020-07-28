@@ -2,8 +2,9 @@ import { stripCurrency } from './ProjectValueInput';
 import firebase from 'gatsby-plugin-firebase';
 import { nanoid } from 'nanoid';
 
-export const sendDataToZapier = async (values) => {
+export const sendDataToZapier = async (values, firebaseUid) => {
   const formData = new FormData();
+  formData.append('firebaseUid', firebaseUid);
   formData.append('email', values.email);
   formData.append('firstName', values.firstName);
   formData.append('lastName', values.lastName);
@@ -60,10 +61,21 @@ export const sendFirebaseSignInEmail = (email) => {
       console.error(error);
     });
 };
-export const createUser = async (email) => {
-  const user = await firebase
+window.firebase = firebase;
+/**
+ * @param {string} email
+ * @param {*} values
+ */
+export const createUser = async (email, values) => {
+  const userSnapshot = await firebase
     .auth()
     .createUserWithEmailAndPassword(email, nanoid());
-  await firebase.auth().signOut();
-  return user;
+  const db = firebase.firestore();
+  await db.collection('Users').doc(userSnapshot.user.uid).set({
+    firstName: values.firstName,
+    lastName: values.lastName,
+    email: values.email,
+    phone: values.phone,
+  });
+  return userSnapshot;
 };

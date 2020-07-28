@@ -9,6 +9,7 @@ import CnpjInput from './CnpjInput';
 import Summary from './Summary';
 import { navigate } from 'gatsby';
 import { sendDataToZapier, createUser } from './onboarding.requests';
+import firebase from 'gatsby-plugin-firebase';
 
 const Wizard = ({ step, setStep, children }) => {
   const { validateForm, setFieldTouched, submitForm, isSubmitting } = useForm();
@@ -71,9 +72,9 @@ export const useForm = () => useContext(FormContext);
 const PROJECT_VALUE_MAX = 2000000;
 
 const onSubmit = async (values) => {
-  const zapPromise = sendDataToZapier(values);
-  const firebasePromise = createUser(values.email).catch(() => {});
-  await Promise.all([zapPromise, firebasePromise]);
+  const userSnapshot = await createUser(values.email, values).catch(() => {});
+  await sendDataToZapier(values, userSnapshot?.user?.uid);
+  await firebase.auth().signOut();
   navigate('/thank-you');
 };
 const phoneMask = (val) => {

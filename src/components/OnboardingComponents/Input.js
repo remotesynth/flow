@@ -118,7 +118,6 @@ Input.defaultProps = {
 export const RadioInput = (props) => {
   const { label, name, disabled, paddingX, paddingY, noLabel, options } = props;
   const { values, errors, touched, setFieldValue } = useForm();
-  console.log('values: ', values);
   return (
     <Container $paddingX={paddingX} $paddingY={paddingY}>
       {!noLabel && <Label>{label}</Label>}
@@ -132,7 +131,7 @@ export const RadioInput = (props) => {
             type='radio'
             id={`radio-${name}-${option}`}
           />
-          <Label for={`radio-${name}-${option}`}>{capitalize(option)}</Label>
+          <Label htmlFor={`radio-${name}-${option}`}>{capitalize(option)}</Label>
         </div>
       ))}
       {!!(touched[name] && errors[name]) && (
