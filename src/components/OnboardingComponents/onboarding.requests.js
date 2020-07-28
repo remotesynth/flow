@@ -38,6 +38,11 @@ export const sendDataToZapier = async (values) => {
   console.log('Zapier hook response: ', data);
   return data;
 };
+
+/**
+ *
+ * @param {string} email
+ */
 export const sendFirebaseSignInEmail = (email) => {
   const actionCodeSettings = {
     // URL you want to redirect back to
@@ -55,5 +60,10 @@ export const sendFirebaseSignInEmail = (email) => {
       console.error(error);
     });
 };
-export const createUser = (email) =>
-  firebase.auth().createUserWithEmailAndPassword(email, nanoid());
+export const createUser = async (email) => {
+  const user = await firebase
+    .auth()
+    .createUserWithEmailAndPassword(email, nanoid());
+  await firebase.auth().signOut();
+  return user;
+};

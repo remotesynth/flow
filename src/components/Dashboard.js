@@ -9,6 +9,10 @@ import { sendFirebaseSignInEmail } from './OnboardingComponents/onboarding.reque
 import { navigate } from 'gatsby';
 import EmailModal from './EmailModal';
 
+const onEmailSent = () => {
+  alert('Enviamos um email com um link direto para acessar o seu Dashboard');
+  navigate('/');
+};
 const Dashboard = () => {
   const [deals, setDeals] = useState(null);
   const unsubscribeAuth = useRef(null);
@@ -19,8 +23,15 @@ const Dashboard = () => {
       .auth()
       .onAuthStateChanged(async (user) => {
         if (!user) {
+          const queryEmail = new URLSearchParams(window.location.search)?.get(
+            'email'
+          )?.replace(' ', '+');
+          console.log('queryEmail: ', queryEmail);
           if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
             return authenticate();
+          } else if (queryEmail) {
+            await sendFirebaseSignInEmail(queryEmail);
+            return onEmailSent();
           } else {
             return setShowLoginModal(true);
           }
@@ -49,10 +60,7 @@ const Dashboard = () => {
           onSubmit={async (email) => {
             await sendFirebaseSignInEmail(email);
             setShowLoginModal(false);
-            alert(
-              'Enviamos um email com um link direto para acessar o seu Dashboard'
-            );
-            navigate('/');
+            onEmailSent();
           }}
           noClose
         />
