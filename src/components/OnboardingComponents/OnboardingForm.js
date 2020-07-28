@@ -71,12 +71,6 @@ export const FormContext = React.createContext();
 export const useForm = () => useContext(FormContext);
 const PROJECT_VALUE_MAX = 2000000;
 
-const onSubmit = async (values) => {
-  const userSnapshot = await createUser(values.email, values).catch(() => {});
-  await sendDataToZapier(values, userSnapshot?.user?.uid);
-  await firebase.auth().signOut();
-  navigate('/thank-you');
-};
 const phoneMask = (val) => {
   const num = val.replace(/\D/g, '');
   if (num.length >= 11) {
@@ -116,18 +110,36 @@ const phoneMask = (val) => {
   ];
 };
 const OnboardingForm = (props) => {
+  const { disableUserStep, initialValues } = props;
+
+  const onSubmit = async (values) => {
+    let userSnapshot;
+    if (!disableUserStep) {
+      userSnapshot = await createUser(values.email, values).catch(() => {});
+    }
+    await sendDataToZapier(values, userSnapshot?.user?.uid);
+    if (disableUserStep) {
+      window.alert('Project created');
+      return navigate('/dashboard');
+    } else {
+      await firebase.auth().signOut();
+      navigate('/thank-you');
+    }
+  };
   const FormikBag = useFormik({
     initialValues: {
       firstName: '',
       lastName: '',
       phone: '',
       partner: '',
-      email: props.initialValues.email || '',
+      email: '',
       projectValue: '0',
       projectDescription: '',
       cnpj: '',
       company: null,
       terms: false,
+      userType: null,
+      ...initialValues,
     },
     onSubmit,
     validationSchema,
@@ -137,18 +149,28 @@ const OnboardingForm = (props) => {
       <Wizard step={props.step} setStep={props.setStep}>
         <Step fields={['firstName', 'lastName', 'userType', 'phone', 'email']}>
           <InputGroup>
-            <Input name='firstName' label='Nome' />
-            <Input name='lastName' label='Sobrenome' />
+            <Input disabled={disableUserStep} name='firstName' label='Nome' />
+            <Input
+              disabled={disableUserStep}
+              name='lastName'
+              label='Sobrenome'
+            />
           </InputGroup>
           <RadioInput
+            disabled={disableUserStep}
             paddingX={15}
             label='User Type'
             name='userType'
             options={Object.values(USER_TYPES)}
           />
-          <Input mask={phoneMask} name='phone' label='Telefone' />
+          <Input
+            disabled={disableUserStep}
+            mask={phoneMask}
+            name='phone'
+            label='Telefone'
+          />
 
-        <Input name='email' label='Email' disabled />
+          <Input name='email' label='Email' disabled />
         </Step>
         <Step fields={['projectValue', 'projectDescription']}>
           <ProjectValueInput max={PROJECT_VALUE_MAX} />
@@ -176,6 +198,7 @@ OnboardingForm.propTypes = {
   }),
   setStep: PropTypes.func,
   step: PropTypes.number,
+  disableUserStep: PropTypes.bool,
 };
 
 const USER_TYPES = {

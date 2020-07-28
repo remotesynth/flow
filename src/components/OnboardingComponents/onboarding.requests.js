@@ -65,7 +65,6 @@ export const sendFirebaseSignInEmail = (email) => {
       console.error(error);
     });
 };
-window.firebase = firebase;
 /**
  * @param {string} email
  * @param {*} values

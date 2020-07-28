@@ -43,6 +43,10 @@ const StartForm = () => {
         name='startForm'
         id='start-form'
         className='start-form'
+        onSubmit={(e) => {
+          e.preventDefault();
+          FormikBag.submitForm();
+        }}
       >
         <input type='hidden' name='form-name' value='startForm' />
 
