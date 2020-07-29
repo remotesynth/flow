@@ -24,7 +24,12 @@ const EmailModal = (props) => {
     <FormContext.Provider value={FormikBag}>
       <ModalContainer>
         <OutsideClickHandler onOutsideClick={onClose}>
-          <Container>
+          <Container
+            onSubmit={(e) => {
+              e.preventDefault();
+              FormikBag.submitForm();
+            }}
+          >
             <Header>
               <Title>Login</Title>
               {!props.noClose && <CloseButton onClick={onClose}>×</CloseButton>}
@@ -54,7 +59,7 @@ EmailModal.propTypes = {
 
 export default EmailModal;
 
-const Container = styled.div`
+const Container = styled.form`
   background: white;
   border-radius: 5px;
   padding: 1.5rem 2rem;
