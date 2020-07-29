@@ -10,6 +10,7 @@ import Footer from './Footer';
 import EmailModal from './EmailModal';
 import { sendFirebaseSignInEmail } from './OnboardingComponents/onboarding.requests';
 import { navigate } from 'gatsby';
+import { useAlert } from './Alert';
 
 function useHasMounted() {
   const [hasMounted, setHasMounted] = useState(false);
@@ -32,6 +33,7 @@ const Body = (props) => {
     []
   );
   const hasMounted = useHasMounted();
+  const alert = useAlert();
   return (
     <>
       <Helmet>

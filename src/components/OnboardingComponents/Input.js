@@ -155,7 +155,7 @@ RadioInput.propTypes = {
   name: PropTypes.string,
   noLabel: PropTypes.bool,
   onChange: PropTypes.func,
-  options: PropTypes.arrayOf(PropTypes.string).isRequired,
+  options: PropTypes.arrayOf(PropTypes.object).isRequired,
   paddingX: PropTypes.number,
   paddingY: PropTypes.number,
   value: PropTypes.string,

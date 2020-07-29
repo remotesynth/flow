@@ -31,13 +31,13 @@ const EmailModal = (props) => {
             }}
           >
             <Header>
-              <Title>Login</Title>
+              <Title>{props.title}</Title>
               {!props.noClose && <CloseButton onClick={onClose}>×</CloseButton>}
             </Header>
             <Input name='email' label='Email' />
             <ButtonContainer>
               <Button type='button' onClick={FormikBag.submitForm}>
-                {FormikBag.isSubmitting ? 'Sending...' : 'Send login link'}
+                {FormikBag.isSubmitting ? 'Sending...' : props.buttonText}
               </Button>
             </ButtonContainer>
           </Container>
@@ -49,12 +49,16 @@ const EmailModal = (props) => {
 
 EmailModal.defaultProps = {
   onClose: () => {},
+  title: 'Login',
+  buttonText: 'Send login link'
 };
 EmailModal.propTypes = {
   onClose: PropTypes.func,
   onSubmit: PropTypes.func.isRequired,
   noClose: PropTypes.bool,
   initial: PropTypes.string,
+  title: PropTypes.string,
+  buttonText: PropTypes.string,
 };
 
 export default EmailModal;
@@ -97,6 +101,8 @@ const Button = styled.button`
   border-color: #438945;
 `;
 const Title = styled.h3`
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   margin: 0;
+  max-width: 350px;
+  margin: 0 15px;
 `;
