@@ -120,7 +120,7 @@ const StepperContainer = styled.div`
     min-height: unset;
     height: 64px;
     width: 90%;
-    position: fixed;
+    position: absolute;
     background: white;
   }
 `;
