@@ -68,7 +68,7 @@ Dashboard.propTypes = {
 const DashboardPage = () => {
   return (
     <ClientOnly>
-      <AuthWrapper>{(props) => <Dashboard {...props} />}</AuthWrapper>;
+      <AuthWrapper>{(props) => <Dashboard {...props} />}</AuthWrapper>
     </ClientOnly>
   );
 };
