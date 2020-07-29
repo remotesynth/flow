@@ -22,9 +22,15 @@
                 "label": "Blog",
                 "type": "action",
                 "url": "blog"
+            },
+            {
+                "label": "Meus projetos",
+                "primary": true,
+                "type": "action",
+                "url": "dashboard"
             }
         ],
-        "title": "Flow",
+        "title": "flow",
         "type": "header"
     },
     "footer": {
