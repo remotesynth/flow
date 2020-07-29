@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import firebase from 'gatsby-plugin-firebase';
 import { Loader } from './OnboardingComponents/Loader';
 import styled from 'styled-components';
@@ -15,40 +15,38 @@ const onEmailSent = () => {
 };
 const Dashboard = () => {
   const [deals, setDeals] = useState(null);
-  const unsubscribeAuth = useRef(null);
   const [showLoginModal, setShowLoginModal] = useState(false);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   useEffect(() => {
-    unsubscribeAuth.current = firebase
-      .auth()
-      .onAuthStateChanged(async (user) => {
-        if (!user) {
-          const queryEmail = new URLSearchParams(window.location.search)
-            ?.get('email')
-            ?.replace(' ', '+');
-          if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
-            return authenticate();
-          } else if (queryEmail) {
-            await sendFirebaseSignInEmail(queryEmail);
-            return onEmailSent();
-          } else {
-            return setShowLoginModal(true);
-          }
-        }
-        const deals = await getDeals(user);
-        if (deals.length < 1) {
-          document.getElementById('deal-msg').style.display = 'block';
+    return firebase.auth().onAuthStateChanged(async (user) => {
+      if (isLoggingOut) return;
+      if (!user) {
+        const queryEmail = new URLSearchParams(window.location.search)
+          ?.get('email')
+          ?.replace(' ', '+');
+        if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
+          return authenticateWithLink();
+        } else if (queryEmail) {
+          await sendFirebaseSignInEmail(queryEmail);
+          return onEmailSent();
         } else {
-          document.getElementById('deal-msg').style.display = 'none';
+          return setShowLoginModal(true);
         }
-        setDeals(deals);
-      });
-    return unsubscribeAuth.current;
+      }
+      const deals = await getDeals(user);
+      if (deals.length < 1) {
+        document.getElementById('deal-msg').style.display = 'block';
+      } else {
+        document.getElementById('deal-msg').style.display = 'none';
+      }
+      setDeals(deals);
+    });
   }, []);
 
-  const signOut = () => {
-    unsubscribeAuth.current();
-    firebase.auth().signOut();
+  const signOut = async () => {
+    setIsLoggingOut(true);
+    await firebase.auth().signOut();
     navigate('/');
   };
   const handleNewProject = () => {
@@ -144,7 +142,7 @@ const getDeals = async (user) => {
   return deals;
 };
 
-const authenticate = () => {
+const authenticateWithLink = () => {
   let email = window.localStorage.getItem('emailForSignIn');
   if (!email) {
     email = window.prompt('Por favor informe seu email para confirmação');
