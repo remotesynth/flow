@@ -17,7 +17,6 @@ const Summary = () => {
             <Name>
               {values.firstName} {values.lastName}
             </Name>
-            <Secondary>{capitalize(values.userType)}</Secondary>
             <Secondary>{values.email}</Secondary>
             <Secondary>{values.phone}</Secondary>
           </Block>

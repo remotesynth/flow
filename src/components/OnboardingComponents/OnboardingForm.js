@@ -157,13 +157,7 @@ const OnboardingForm = (props) => {
               label='Sobrenome'
             />
           </InputGroup>
-          <RadioInput
-            disabled={disableUserStep}
-            paddingX={15}
-            label='User Type'
-            name='userType'
-            options={USER_TYPE_OPTIONS}
-          />
+
           <Input
             disabled={disableUserStep}
             mask={phoneMask}
@@ -172,6 +166,13 @@ const OnboardingForm = (props) => {
           />
 
           <Input name='email' label='Email' disabled />
+         <RadioInput
+            disabled={disableUserStep}
+            paddingX={15}
+            label=''
+            name='userType'
+            options={USER_TYPE_OPTIONS}
+          />
         </Step>
         <Step fields={['projectValue', 'projectDescription']}>
           <ProjectValueInput max={PROJECT_VALUE_MAX} />
