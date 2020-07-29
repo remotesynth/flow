@@ -10,6 +10,7 @@ import Summary from './Summary';
 import { navigate } from 'gatsby';
 import { sendDataToZapier, createUser } from './onboarding.requests';
 import firebase from 'gatsby-plugin-firebase';
+import { useAlert } from '../Alert';
 
 const Wizard = ({ step, setStep, children }) => {
   const { validateForm, setFieldTouched, submitForm, isSubmitting } = useForm();
@@ -111,7 +112,7 @@ const phoneMask = (val) => {
 };
 const OnboardingForm = (props) => {
   const { disableUserStep, initialValues } = props;
-
+  const alert = useAlert();
   const onSubmit = async (values) => {
     let userSnapshot;
     if (!disableUserStep) {
@@ -119,7 +120,7 @@ const OnboardingForm = (props) => {
     }
     await sendDataToZapier(values, userSnapshot?.user?.uid);
     if (disableUserStep) {
-      window.alert('Project created');
+      alert('Project created');
       return navigate('/dashboard');
     } else {
       await firebase.auth().signOut();

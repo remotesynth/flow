@@ -8,11 +8,7 @@ import { sendFirebaseSignInEmail } from './OnboardingComponents/onboarding.reque
 import { navigate } from 'gatsby';
 import EmailModal from './EmailModal';
 import DealsList from './DealsList';
-
-const onEmailSent = async () => {
-  alert('Enviamos um email com um link direto para acessar o seu Dashboard');
-  navigate('/');
-};
+import { useAlert } from './Alert';
 
 const handleNewProject = () => {
   navigate('/new_project', {
@@ -70,7 +66,11 @@ Dashboard.propTypes = {
 };
 
 const DashboardPage = () => {
-  return <AuthWrapper>{(props) => <Dashboard {...props} />}</AuthWrapper>;
+  return (
+    <ClientOnly>
+      <AuthWrapper>{(props) => <Dashboard {...props} />}</AuthWrapper>;
+    </ClientOnly>
+  );
 };
 export default DashboardPage;
 
@@ -152,12 +152,18 @@ const useAuth = () => {
 };
 
 const AuthWrapper = ({ children }) => {
+  const alert = useAlert();
   const [showLoginModal, setShowLoginModal] = useState(false);
   const localstorageEmail = window.localStorage.getItem('emailForSignIn');
   const [authEmail, setAuthEmail] = useState(localstorageEmail);
   const { user, initializing } = useAuth();
   const showConfirmEmail =
     !authEmail && !initializing && !user && !showLoginModal;
+
+  const onEmailSent = async () => {
+    alert('Enviamos um email com um link direto para acessar o seu Dashboard');
+    navigate('/');
+  };
 
   useEffect(() => {
     if (user || initializing) return;
