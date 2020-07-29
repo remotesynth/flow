@@ -79,6 +79,7 @@ export const createUser = async (email, values) => {
     lastName: values.lastName,
     email: values.email,
     phone: values.phone,
+    userType: values.userType,
   });
   return userSnapshot;
 };

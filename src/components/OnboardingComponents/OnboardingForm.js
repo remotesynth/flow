@@ -138,7 +138,7 @@ const OnboardingForm = (props) => {
       cnpj: '',
       company: null,
       terms: false,
-      userType: null,
+      userType: '',
       ...initialValues,
     },
     onSubmit,
@@ -161,7 +161,7 @@ const OnboardingForm = (props) => {
             paddingX={15}
             label='User Type'
             name='userType'
-            options={Object.values(USER_TYPES)}
+            options={USER_TYPE_OPTIONS}
           />
           <Input
             disabled={disableUserStep}
@@ -205,6 +205,13 @@ const USER_TYPES = {
   VENDOR: 'vendor',
   CUSTOMER: 'customer',
 };
+const USER_TYPE_OPTIONS = [
+  { value: USER_TYPES.CUSTOMER, label: 'Quero alugar para o meu negócio' },
+  {
+    value: USER_TYPES.VENDOR,
+    label: 'Quero oferecer a solução flow para os meus clientes e parceiros',
+  },
+];
 
 const phoneRegex = RegExp(/^([(][1-9]{2}[)] )?[0-9]{4,5}[-]?[0-9]{4}$/);
 
@@ -214,7 +221,7 @@ const validationSchema = yup.object({
   userType: yup
     .string()
     .oneOf(Object.values(USER_TYPES))
-    .required('Select a User Type'),
+    .required('Selecionar como deseja utilizar a solução flow'),
   phone: yup
     .string()
     .required('Telefone é um campo obrigatório')
