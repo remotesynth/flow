@@ -1,19 +1,37 @@
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import _ from 'lodash';
+import firebase from 'gatsby-plugin-firebase';
 
 import { safePrefix } from '../utils';
 import Header from './Header';
 import Footer from './Footer';
 import EmailModal from './EmailModal';
 import { sendFirebaseSignInEmail } from './OnboardingComponents/onboarding.requests';
+import { navigate } from 'gatsby';
+
+function useHasMounted() {
+  const [hasMounted, setHasMounted] = useState(false);
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
+  return hasMounted;
+}
 
 const Body = (props) => {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const openLogin = () => setShowLoginModal(true);
   const closeLogin = () => setShowLoginModal(false);
-
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+  useEffect(
+    () =>
+      firebase.auth().onAuthStateChanged((user) => {
+        setIsUserLoggedIn(!!user);
+      }),
+    []
+  );
+  const hasMounted = useHasMounted();
   return (
     <>
       <Helmet>
@@ -58,9 +76,22 @@ const Body = (props) => {
       >
         {props.showHeader && (
           <Header {...props}>
-            <li className='menu-item menu-button' onClick={openLogin}>
-              <a className='button pointer'>Acessar</a>
-            </li>
+            {hasMounted &&
+              (isUserLoggedIn ? (
+                <li
+                  className='menu-item menu-button'
+                  onClick={async () => {
+                    await firebase.auth().signOut();
+                    navigate('/');
+                  }}
+                >
+                  <a className='button pointer'>Log Out</a>
+                </li>
+              ) : (
+                <li className='menu-item menu-button' onClick={openLogin}>
+                  <a className='button pointer'>Acessar</a>
+                </li>
+              ))}
           </Header>
         )}
         <main id='content' className='site-content'>

@@ -3,7 +3,6 @@ import React from 'react';
 import styled from 'styled-components';
 import MaskedInput from 'react-text-mask';
 import { useForm } from './OnboardingForm';
-import capitalize from 'lodash/capitalize';
 
 const Input = (props) => {
   const {
@@ -58,6 +57,8 @@ export const Label = styled.label`
   font-size: 0.875rem;
   opacity: 0.5;
   color: #000000;
+  display: inline-block;
+  line-height: 1rem;
 `;
 export const ErrorLabel = styled.label`
   display: block;
@@ -85,6 +86,11 @@ export const InputBase = styled(MaskedInput)`
   color: #2c3e50;
   font-size: 0.875rem;
   transition: all ease 0.2s;
+`;
+const RadioOptionContainer = styled.div`
+  display: flex;
+  align-items: baseline;
+  margin: 1rem 0;
 `;
 Input.propTypes = {
   component: PropTypes.any,
@@ -123,19 +129,19 @@ export const RadioInput = (props) => {
     <Container $paddingX={paddingX} $paddingY={paddingY}>
       {!noLabel && <Label>{label}</Label>}
       {options.map((option) => (
-        <div key={option}>
+        <RadioOptionContainer key={option.value}>
           <input
             name={name}
-            onClick={() => setFieldValue(name, option)}
-            checked={value === option}
+            onClick={() => setFieldValue(name, option.value)}
+            checked={value === option.value}
             disabled={disabled}
             type='radio'
-            id={`radio-${name}-${option}`}
+            id={`radio-${name}-${option.value}`}
           />
-          <Label htmlFor={`radio-${name}-${option}`}>
-            {capitalize(option)}
+          <Label htmlFor={`radio-${name}-${option.value}`}>
+            {option.label}
           </Label>
-        </div>
+        </RadioOptionContainer>
       ))}
       {!!(touched[name] && errors[name]) && (
         <ErrorLabel>{errors[name]}</ErrorLabel>
