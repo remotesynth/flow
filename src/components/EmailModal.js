@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { FormContext } from './OnboardingComponents/OnboardingForm';
 import Input from './OnboardingComponents/Input';
 import * as yup from 'yup';
+import iconEmail from '../../static/images/icons/email-icon.png'
 
 const EmailModal = (props) => {
   const { onClose, onSubmit } = props;
@@ -16,8 +17,8 @@ const EmailModal = (props) => {
     validationSchema: yup.object().shape({
       email: yup
         .string()
-        .email('Invalid email format')
-        .required('Email é um campo obrigatório'),
+        .email('Email inválido')
+        .required('Por favor inserir seu email'),
     }),
   });
   return (
@@ -34,10 +35,15 @@ const EmailModal = (props) => {
               <Title>{props.title}</Title>
               {!props.noClose && <CloseButton onClick={onClose}>×</CloseButton>}
             </Header>
-            <Input name='email' label='Email' />
+            <MsgContainer className='block-copy'>
+              <IconEmail src={iconEmail} alt="Email Mágico" />
+              <MsgText>Com a <b>flow</b> você não precisa lembrar de senha<br></br>
+              Insira seu email para receber um link seguro para acesso direto</MsgText>
+            </MsgContainer>
+            <Input name='email' label='' placeholder='Email' />
             <ButtonContainer>
               <Button type='button' onClick={FormikBag.submitForm}>
-                {FormikBag.isSubmitting ? 'Sending...' : props.buttonText}
+                {FormikBag.isSubmitting ? 'Enviando...' : props.buttonText}
               </Button>
             </ButtonContainer>
           </Container>
@@ -49,8 +55,8 @@ const EmailModal = (props) => {
 
 EmailModal.defaultProps = {
   onClose: () => {},
-  title: 'Login',
-  buttonText: 'Send login link'
+  title: 'Acessar com Email',
+  buttonText: 'Receber Email'
 };
 EmailModal.propTypes = {
   onClose: PropTypes.func,
@@ -68,6 +74,25 @@ const Container = styled.form`
   border-radius: 5px;
   padding: 1.5rem 2rem;
 `;
+
+const MsgContainer = styled.div`
+  margin: auto;
+  text-align: center;
+  padding:10px;
+`;
+
+const IconEmail = styled.img`
+  width: 70px;
+  padding: 20px;
+`;
+
+const MsgText = styled.p`
+  line-height: 1.3;
+  font-size: 15px;
+  padding:0;
+`;
+
+
 const ModalContainer = styled.div`
   position: fixed;
   display: grid;
@@ -99,6 +124,7 @@ const ButtonContainer = styled.div`
 const Button = styled.button`
   background: #438945;
   border-color: #438945;
+  margin: auto;
 `;
 const Title = styled.h3`
   font-size: 1.2rem;

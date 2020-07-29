@@ -39,7 +39,7 @@ const Dashboard = ({ signOut, user }) => {
   return (
     <>
       <NewProjectButton onClick={handleNewProject}>
-        Submit New Project
+        Enviar Novo Projeto
       </NewProjectButton>
       <Card>
         {deals?.list?.length < 1 && (
@@ -177,7 +177,7 @@ const AuthWrapper = ({ children }) => {
             case 'auth/invalid-action-code': {
               window.localStorage.removeItem('emailForSignIn');
               alert(
-                'Link de acesso expirou para sua segurança. Por favor informe seu email para receber um novo link'
+                'Para sua segurança o link de acesso expirou . Por favor informe seu email para receber um novo link'
               );
               setShowLoginModal(true);
               break;
@@ -216,8 +216,8 @@ const AuthWrapper = ({ children }) => {
       )}
       {showConfirmEmail && (
         <EmailModal
-          title='Por favor informe seu email para confirmação'
-          buttonText='Confirm'
+          title='Por favor confirme seu email abaixo para login'
+          buttonText='Confirmar'
           onSubmit={(email) => {
             setAuthEmail(email);
           }}

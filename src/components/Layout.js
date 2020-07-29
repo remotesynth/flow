@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet';
 import _ from 'lodash';
 import firebase from 'gatsby-plugin-firebase';
 
-import { safePrefix } from '../utils';
+import { Link , safePrefix } from '../utils';
 import Header from './Header';
 import Footer from './Footer';
 import EmailModal from './EmailModal';
@@ -80,18 +80,23 @@ const Body = (props) => {
           <Header {...props}>
             {hasMounted &&
               (isUserLoggedIn ? (
-                <li
-                  className='menu-item menu-button'
-                  onClick={async () => {
-                    await firebase.auth().signOut();
-                    navigate('/');
-                  }}
-                >
-                  <a className='button pointer'>Log Out</a>
-                </li>
+                <div className="menu-item">
+                  <li
+                    className='menu-item menu-button'>
+                    <Link to={safePrefix('/dashboard')} className='button pointer'>Meus Projetos</Link>
+                  </li>
+                  <li
+                    className='menu-item menu-button'
+                    onClick={async () => {
+                      await firebase.auth().signOut();
+                      navigate('/');
+                    }}>
+                    <a className='button pointer'>Sair</a>
+                  </li>
+                </div>
               ) : (
                 <li className='menu-item menu-button' onClick={openLogin}>
-                  <a className='button pointer'>Acessar</a>
+                  <a className='button pointer'>Meus Projetos</a>
                 </li>
               ))}
           </Header>
