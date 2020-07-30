@@ -15,3 +15,4 @@ wait
 
 curl -s -X POST https://api.stackbit.com/project/5efb83b88c4b30001b3bb318/webhook/build/publish > /dev/null
 echo "Stackbit-build.sh finished build"
+ 
