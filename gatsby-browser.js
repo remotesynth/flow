@@ -3,12 +3,13 @@
  *
  * See: https://www.gatsbyjs.org/docs/browser-apis/
  */
-import React from 'react';
-import 'firebase/auth';
-import 'firebase/firestore';
-import { AlertProvider } from './src/components/Alert';
+require('firebase/auth');
+require('firebase/firestore');
 
-export const onInitialClientRender = () => {
+const React = require('react');
+const { AlertProvider } = require('./src/components/Alert');
+
+exports.onInitialClientRender = () => {
   if (
     'onGatsbyInitialClientRender' in window &&
     typeof window.onGatsbyInitialClientRender === 'function'
@@ -17,7 +18,7 @@ export const onInitialClientRender = () => {
   }
 };
 
-export const onRouteUpdate = () => {
+exports.onRouteUpdate = () => {
   if (
     'onGatsbyRouteUpdate' in window &&
     typeof window.onGatsbyRouteUpdate === 'function'
@@ -26,6 +27,6 @@ export const onRouteUpdate = () => {
   }
 };
 
-export const wrapRootElement = ({ element }) => (
+exports.wrapRootElement = ({ element }) => (
   <AlertProvider>{element}</AlertProvider>
 );
