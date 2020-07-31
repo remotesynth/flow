@@ -5,22 +5,10 @@ import { FormContext } from './OnboardingComponents/OnboardingForm';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import styled from 'styled-components';
+import firebase from 'gatsby-plugin-firebase';
+import { sendFirebaseSignInEmail } from './OnboardingComponents/onboarding.requests';
+import { useAlert } from './Alert';
 
-const onSubmit = (values) => {
-  const { email } = values;
-  const formData = new FormData();
-  formData.append('email', email);
-
-  const requestOptions = {
-    method: 'POST',
-    body: formData,
-    redirect: 'follow',
-  };
-
-  fetch('https://hooks.zapier.com/hooks/catch/142211/ozo0et4/', requestOptions)
-    .then(() => navigate('signup', { state: { email } }))
-    .catch((error) => console.log('error', error));
-};
 const validationSchema = yup.object({
   email: yup
     .string()
@@ -28,6 +16,43 @@ const validationSchema = yup.object({
     .required('Por favor inserir seu email'),
 });
 const StartForm = () => {
+  const alert = useAlert();
+  const onSubmit = async (values) => {
+    const { email } = values;
+    const user = firebase.auth().currentUser;
+
+    if (user?.email !== email) {
+      await firebase.auth().signOut();
+    }
+
+    const resp = await firebase.auth().fetchSignInMethodsForEmail(email);
+    if (resp.length && !user) {
+      await sendFirebaseSignInEmail(email);
+      return alert(
+        'Looks like you already have an account with us so we sent you a link for direct login'
+      );
+    }
+    const formData = new FormData();
+    formData.append('email', email);
+
+    const requestOptions = {
+      method: 'POST',
+      body: formData,
+    };
+
+    await fetch(
+      'https://hooks.zapier.com/hooks/catch/142211/ozo0et4/',
+      requestOptions
+    );
+
+    user?.email === email
+      ? navigate('/new_project', {
+          state: {
+            autofillUser: true,
+          },
+        })
+      : navigate('/signup', { state: { email } });
+  };
   const FormikBag = useFormik({
     initialValues: {
       email: '',
@@ -37,6 +62,7 @@ const StartForm = () => {
     onSubmit,
     validationSchema,
   });
+
   return (
     <FormContext.Provider value={FormikBag}>
       <form
